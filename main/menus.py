@@ -9,7 +9,7 @@ from main.helper import (
 )
 from django.core.cache import cache
 
-
+from main.templatetags.selfurl_tags import base64_decode, base64_encode
 
 
 
@@ -173,7 +173,7 @@ def user_menu(request):
         if has_threads(request.user.email):
             item_dict4 = {
                 'title' : 'Contact Threads',
-                'url' : reverse('contact:threads', args=[str(request.user.email)]), 
+                'url' : reverse('contact:threads', args=[base64_encode(request.user.email)]), 
                 'data_set': False  
             }
             submenus.append(item_dict4)   

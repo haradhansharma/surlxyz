@@ -8,7 +8,7 @@ from main.context_processor import site_info
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
+from main.templatetags.selfurl_tags import base64_encode, base64_decode
 from main.helper import (
  
     custom_send_mass_mail,
@@ -59,8 +59,9 @@ def get_reply_form(request, id):
     
 
 @login_required
-def threads(request, email):
-    if str(email) != str(request.user.email) or not request.user.is_staff or not request.user.is_superuser:
+def threads(request, email):    
+    
+    if email != base64_encode(request.user.email) or not request.user.is_staff or not request.user.is_superuser:
         raise PermissionDenied
     
     if not has_threads(request.user.email):
@@ -74,7 +75,7 @@ def threads(request, email):
     if request.user.is_staff or request.user.is_superuser:
         threads = ContactMessage.objects.all().prefetch_related('threads')
     else:        
-        threads = ContactMessage.objects.filter(email = email).prefetch_related('threads')
+        threads = ContactMessage.objects.filter(email = base64_decode(email)).order_by('-created_at').prefetch_related('threads')
         
         
     page = request.GET.get('page', 1)
@@ -127,7 +128,7 @@ def contact(request):
             visitor_message = f"Dear {form.cleaned_data['name']},\n\nThank you for reaching out to us through our website." 
             visitor_message += f"We appreciate your interest in {site_data.get('name')}!\n\n"
             visitor_message += f"This email is to acknowledge that we have received your contact form submission. Please note that this is a no-reply email, "
-            visitor_message += f"so there's no need to reply to it.\n\nA thread have been created at {request.build_absolute_uri(reverse('contact:threads', args=[str(form.cleaned_data['email'])]))}"
+            visitor_message += f"so there's no need to reply to it.\n\nA thread have been created at {request.build_absolute_uri(reverse('contact:threads', args=[base64_encode(request.user.email)]))}"
             visitor_message += f" . You may follow responses there.\n\nOur team is currently reviewing your message, and we will get back to you soon with a response at the designated thread. "
             
             visitor_message += f"We strive to provide excellent service and address your inquiry promptly.\n\nOnce again, we thank you for getting in touch with us. "
