@@ -1,5 +1,6 @@
+from django.conf import settings
 from django.db import models
-from django.contrib.auth import get_user_model
+# from django.contrib.auth import get_user_model
 from django.utils.text import slugify
 
 class Shortener(models.Model):
@@ -11,7 +12,7 @@ class Shortener(models.Model):
     short_url ->  shortened link https://domain/(short_url)
     ''' 
     
-    creator = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, null=True, blank=True, db_index=True)
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True, db_index=True)
     
     clicked = models.PositiveIntegerField(default=0)
     
@@ -58,7 +59,7 @@ class Versions(models.Model):
         
 class ReportMalicious(models.Model):
     url = models.ForeignKey(Shortener, on_delete=models.CASCADE, related_name='reporturl')
-    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='reportuser')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='reportuser')
     reasons = models.TextField('Reasons you are reporting for', help_text='This report is requested to be done honestly. Because with this report, the target URL will be closed for all those who have taken our service to shorten it for their needs. Your dishonesty may cause us to lose business.')
     checked = models.BooleanField(default=False)
     check_decision = models.CharField(max_length=50)

@@ -100,8 +100,7 @@ class BlogArchiveSitemap(sitemaps.Sitemap):
     priority = 0.9    
 
     def items(self):
-        archives = get_blog_archive()[:50]
-        print(archives)
+        archives = get_blog_archive()[:50] 
         return archives
     
     def lastmod(self, obj):
@@ -123,13 +122,13 @@ class UrlVersionsSitemap(sitemaps.Sitemap):
         
     def location(self, obj):
         return reverse('selfurl:versions', args=[str(obj.short_url)])
-    
+from django.db.models import Q   
 class VisiorLogPdfSitemap(sitemaps.Sitemap):
     changefreq = "weekly"
     priority = 0.9    
 
     def items(self):
-        versions = Shortener.objects.exclude(creator = None).filter(active=True)[:20]
+        versions = Shortener.objects.filter(active=True, creator=True)[:20]
         return versions
     
     def lastmod(self, obj):
@@ -143,7 +142,7 @@ class ClickedPdfSitemap(sitemaps.Sitemap):
     priority = 0.9    
 
     def items(self):
-        versions = Shortener.objects.exclude(creator = None).filter(active=True)[:20]
+        versions = Shortener.objects.filter(active=True, creator=True)[:20]
         return versions
     
     def lastmod(self, obj):

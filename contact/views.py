@@ -56,10 +56,37 @@ def get_reply_form(request, id):
        
     }
     return render(request, template_name, context=context)
-    
+ 
+import uuid
+
+def validate_uuid(uuid_string):
+    try:
+        uuid.UUID(uuid_string)
+        return True
+    except:
+        return False   
+from accounts.models import User
+
 
 @login_required
-def threads(request, email):    
+def threads(request, email):
+    
+    
+
+
+
+
+    for u in User.objects.all():
+        if validate_uuid(str(u.id)):
+            print(f'{str(u.id)} valid')
+        else:
+            print(f'{str(u.id)} not valid')
+            
+    
+    
+            
+            
+            
     
     if email != base64_encode(request.user.email) or not request.user.is_staff or not request.user.is_superuser:
         raise PermissionDenied
@@ -73,7 +100,7 @@ def threads(request, email):
     site['title'] = 'Threads'
     site['description'] = 'All Threads of the login user if exists.'
     if request.user.is_staff or request.user.is_superuser:
-        threads = ContactMessage.objects.all().prefetch_related('threads')
+        threads = ContactMessage.objects.all().order_by('-created_at').prefetch_related('threads')
     else:        
         threads = ContactMessage.objects.filter(email = base64_decode(email)).order_by('-created_at').prefetch_related('threads')
         

@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.contrib.sites.models import Site
@@ -103,7 +104,7 @@ class CreatorModelMixin(models.Model):
     It will add `creator` ForeigKey field to the digignated model
     '''
     creator = models.ForeignKey(
-        get_user_model(),
+        settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         editable=False,
         db_index=True,

@@ -44,12 +44,13 @@ class QIUserManager(UserManager):
     def create_superuser(self, username = None, email=None, password=None, **extra_fields):
         return super(QIUserManager, self).create_superuser(username, email, password, **extra_fields)
 
-
+def get_uid():
+    return uuid.uuid4()
 
 class User(AbstractUser):
     username_validator = UnicodeUsernameValidator()
     
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False) 
     
     username = models.CharField(
         _("username"),      
@@ -106,7 +107,7 @@ class CustomResizeToFill(Resize):
     
 class Profile(models.Model):
     # It is beeing created autometically during signup by using signal.
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True)
     avatar = ProcessedImageField(upload_to='profile_photo',
                     processors=ProcessorPipeline([CustomResizeToFill(200, 200)]),
                     format='JPEG',
