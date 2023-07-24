@@ -21,8 +21,8 @@ sitemap_list = {
     'UserBlogSitemap':UserBlogSitemap,
     'BlogArchiveSitemap' : BlogArchiveSitemap,
     'UrlVersionsSitemap' : UrlVersionsSitemap,
-    'VisiorLogPdfSitemap' : VisiorLogPdfSitemap,
-    'ClickedPdfSitemap' : ClickedPdfSitemap
+    # 'VisiorLogPdfSitemap' : VisiorLogPdfSitemap,
+    # 'ClickedPdfSitemap' : ClickedPdfSitemap
 }
 
 urlpatterns = [
