@@ -1,0 +1,103 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+
+{% block robot %}<meta name="robots" content="index">{% endblock %}
+
+{% block content %}
+
+<div class="px-4 py-5 mb-5 text-center  border-bottom ">
+    <img class="d-block mx-auto mb-4" src="{{ site_data.favicon }}" alt="{{site_data.name}}" width="72" height="72">
+    <h1 class="display-5 fw-bold text-primary">{{site_data.title|safe}}</h1>   
+</div>
+
+
+<div class="container mb-5">
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="row">
+                {% for blog in blogs %}
+                    <div class="col-lg-12 mb-3">
+                        <div class="card flex-fill">             
+                            <a href="{{blog.get_absolute_url}}">
+                                <img class="img-fluid" src="{{blog.feature.url}}" alt="{{blog.title}}" title="{{blog.title}}">
+                            </a>                        
+                            <div class="card-body">
+                                <h4 class="card-title">
+                                    <a href="{{blog.get_absolute_url}}">{{blog.title}}</a>
+                                </h4>
+                                <ul class="list-inline">
+                                    <li class="list-inline-item"><a href="{% url 'cms:user_blogs' blog.creator.username %}">{{ blog.creator.username }}</a></li>
+                                    <li class="separator list-inline-item">/</li>
+                                    <li class="list-inline-item">{{blog.updated_at|date:"F j, Y" }}</li>
+                                </ul>
+                                {{ blog.body|safe|truncatechars:250 }}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            {% include 'includes/pagination.html' with page=blogs %} 
+        </div>
+        <div class="col-lg-4">
+            <div class="row">
+                <div class="col-lg-12">
+                    <form class="blog-search" method="GET">
+                        <div class="input-group mb-3">
+                            {{ search_form.search_query }}                                            
+                            <button type="submit" class="btn btn-sm btn-primary">
+                                FIND
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-lg-12">
+                    <h3 class="custom-underline lead fw-bold">Categories</h3>
+            
+                        <ul class="list-group list-group-flush">
+                            {% for cat in categories %}                            
+                            <li class="list-group-item">
+                                <a class="{% if cat.get_absolute_url == request.path %} active {% endif %} link-danger" href="{{cat.get_absolute_url}}">
+                                    <span class="left-content">{{cat.title}}</span>
+                                    <span class="count-text">{{ cat.blog_count }}</span>
+                                </a>
+                            </li>
+                            {% endfor %}
+                            
+                        </ul>
+               
+                </div>
+                <div class="col-lg-12">
+                    <h3 class="custom-underline-green lead fw-bold">Top Views</h3>
+                    
+                        <ul class="list-group list-group-flush">
+                            {% for b in top_views %}
+                                <li class="list-group-item"><a class="link-success {% if b.get_absolute_url == request.path %} active {% endif %}" href="{{b.get_absolute_url}}">{{b.title}}({{b.total_view_count}})</a></li>
+                            {% endfor %}                            
+                        </ul>
+                    
+                </div>
+                <div class="col-lg-12">
+                    <h3 class="custom-underline-blue lead fw-bold">Archives</h3>                       
+                        <ul class="list-group list-group-flush">                              
+                            {% for ba in blog_archive %}
+                                {% url 'cms:archive_detail' year=ba.month|date:'Y' month=ba.month|date:'m' as archive_url %}                                          
+                                <li class="list-group-item">
+                                    <a href="{{ archive_url }}" class="cate {% if archive_url == request.path %}active{% endif %}">
+                                        {{ ba.month|date:"F Y" }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                            
+                        </ul>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+

@@ -1,0 +1,12 @@
+<small class="border-bottom">Just Now / {{request.user.email}}</small>
+<div>{{reply}}</div>
+{% if messages %}  
+<div class="col-12 text-center">
+    <div class="alert alert-secondary shadow-soft" role="alert">                            
+        {% for message in messages %}
+        <span class="alert-inner--text">{{ message }}</span>
+        {% endfor %}                            
+    </div>                        
+</div>
+{# {% include "layouts/ads_display.html" %} #}
+{% endif %}

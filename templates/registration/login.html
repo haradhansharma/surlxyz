@@ -1,0 +1,56 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% block robot %}<meta name="robots" content="noindex">{% endblock %}
+
+{% block content %}
+<div class="mt-5"></div>
+<div class="row align-items-center g-lg-5 py-5">    
+    <div class="col-lg-7 text-start">
+        <h1 class="display-4 fw-bold lh-1 mb-3 text-primary">{{site_data.title}}</h1>
+        
+        <p class="col-lg-10 fs-5">{{site_data.description|safe}}</p>
+        
+    </div>
+    <div class="col-md-10 mx-auto col-lg-5">     
+                
+        <form method="POST" class="p-4 p-md-5 border rounded-3 bg-light" novalidate="" autocomplete="off">
+            {% csrf_token %}            
+            <div class="form-floating mb-3">
+                {{ form.username }}
+                <label class="text-primary" for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+                <span class="text-start text-danger">{{ form.username.errors }}</span>
+            </div>
+            
+            <div class="form-floating mb-3">
+                {{ form.password }}
+                <label class="text-primary" for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
+                <span class="text-start text-danger">{{ form.password.errors }}</span>
+                <a href="{% url 'password_reset' %}" class="float-end">Forget Password?</a>
+            </div>
+           
+            <div class="form-floating mb-3">                
+                {{ form.captcha }}                
+                <span class="text-start text-danger">{{ form.captcha.errors }}</span>
+            </div>
+            
+            <div class="d-flex justify-content-between align-items-top mb-4">
+                <div class="form-check">
+                    {{ form.remember_me }}
+                    <label class="mb-2 text-muted" for="{{ form.remember_me.id_for_label }}">{{ form.remember_me.label  }} </label>
+                    <span class="btn-primary p-1 rounded-circle" data-bs-toggle="tooltip" data-bs-html="true"
+                        title=" If 'remember me' selected the site will save cookies to your opened browser. So that within certain time (currently 30 days) you do not require to re-login. if you do not select 'remember me' then need to login after closing the browser. If your browser settings are set to clear all cookies during closing the browser then site will not save the cookies to your browser or computer to record login data."> ? </span>
+                    <span class="text-start text-danger">{{ form.remember_me.errors }}</span>
+                </div>
+                <button type="submit" class="btn btn-primary"> Login </button>
+            </div>            
+            <hr class="my-4 text-primary">
+            
+            <div class="text-muted"> Don't have an account? <a href="{% url 'accounts:signup' %}" class="text-dark">Create One</a> </div>
+        </form>
+        <div class="mt-2">
+            {# {% include "layouts/ads_boom_your_identity.html" %} #}
+        </div>
+    </div>
+    
+</div>
+{% endblock content %}

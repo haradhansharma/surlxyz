@@ -1,0 +1,20 @@
+{% load static %}
+
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>  
+<script src="{% static 'vendor/aos/aos.js' %}"></script>
+<script>AOS.init();</script>
+
+
+<script nonce="{{ CSP_NONCE }}" type="application/javascript">
+    document.body.addEventListener('htmx:configRequest', (e) => {
+        e.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+        })
+</script>
+
+
+
+
+
+
+
+

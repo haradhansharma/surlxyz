@@ -1,0 +1,58 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block robot %}<meta name="robots" content="index">{% endblock %}
+{% block content %}
+
+<div class="px-4 py-5 mb-5 text-center  border-bottom ">
+    <img class="d-block mx-auto mb-4" src="{{ site_data.favicon }}" alt="{{site_data.name}}" width="72" height="72">
+    <h1 class="display-5 fw-bold text-primary">{{site_data.title|safe}}</h1>
+    <div class="mt-2">
+        {# {% include "layouts/ads_boom_your_identity.html" %} #}
+    </div>
+    <ul class="list-inline">
+        <li class="list-inline-item">       
+            <a href="{% url 'cms:user_blogs' blog.creator.username %}">{{blog.creator.username}}</a>
+        </li>   
+        /
+        <li class="list-inline-item">    
+            {{blog.updated_at|date:"F j, Y" }}
+        </li>        
+    </ul>
+</div>
+
+<div class="col-lg-12 mb-3">
+             
+        <a href="{{blog.get_absolute_url}}">
+            <img class="img-fluid w-100" src="{{blog.feature.url}}" alt="{{blog.title}}" title="{{blog.title}}">
+        </a>                        
+        <div class="border-bottom border-2 px-5 pt-5 text-justify">            
+            {{ blog.body|safe}}
+        </div>
+
+        <div class="border-bottom border-2 px-5 py-2 text-justify">Views: {{blog.total_view }}</div>
+        <div class="border-bottom border-2 px-5 py-2 text-justify">   
+            <div class="tag-cloud">
+                {% for cat in blog.categories.all %}
+                <a class="badge bg-primary" href="{{ cat.get_absolute_url }}">{{cat.title}}</a>
+                {% endfor %}                
+            </div>
+        </div>
+
+
+        
+    
+</div>
+
+
+
+
+
+
+{% endblock %}
+
+{% block javascripts %}
+
+
+
+{% endblock javascripts %}

@@ -1,0 +1,51 @@
+{% load static %}
+<header>
+    <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light border-bottom">
+        <div class="container p-2">
+            <a href="/">
+                <img src="{{ site_data.logo }}"  height="40" alt="{{ site_data.name }}">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fa fa-bars" aria-hidden="true"></i>
+            </button>
+            <div class="navbar-collapse collapse" id="navbarCollapse">
+                <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                    {% for hm in header_menu %}
+                    {% if hm.url and not hm.data_set %}
+                    <li class="nav-item">
+                        <a href="{{hm.url}}" class="nav-link {% if hm.url == request.path %} active {% endif %} ">{{hm.title}}</a>
+                    </li>
+                    {% endif %}    
+
+                    {% if hm.data_set and not hm.url %} 
+                    <li class="nav-link dropdown">                       
+                        <span class="dropdown-toggle" id="dropdownMenuTop2" data-bs-toggle="dropdown" aria-expanded="false">{{hm.title}}</span>     
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuTop2">
+                            {% for ds in hm.data_set %} 
+                            <li><a class="dropdown-item {% if hm.url == request.path %} active {% endif %}" href="{{ds.url}}">{{ds.title}}</a></li>                            
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    {% endif %}   
+                    {% endfor %}       
+                   
+                </ul>
+
+                <div class="nav-link dropdown">
+                    {% for um in user_menu %}                    
+                    {% if um.data_set and not um.url %} 
+                        <span class="dropdown-toggle" id="dropdownMenuTop" data-bs-toggle="dropdown" aria-expanded="false">{{um.title}}</span>                   
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuTop">  
+                            {% for ds in um.data_set %}                          
+                                <li><a class="dropdown-item {% if hm.url == request.path %} active {% endif %}" href="{{ds.url}}">{{ds.title}}</a></li> 
+                            {% endfor %}                                            
+                        </ul>
+                    {% endif %}  
+                    {% endfor %}  
+                                
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>

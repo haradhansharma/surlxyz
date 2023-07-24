@@ -1,0 +1,39 @@
+{% load static %}
+
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="msvalidate.01" content="C960B076480CA5EDEB68F2B60FA3A8B6" />
+<meta name="google-site-verification" content="MGTtBLWPpiQbR7H6gZEfcLmjDP0bsmFP3Aa7U8iRmjE" />
+<meta name="facebook-domain-verification" content="msn2jr9554t197xn4dw93k9p2v46qh" />
+<meta name="propeller" content="70a6f1647519f6eebf337a10389233e4">
+<meta name="ahrefs-site-verification" content="65fb77a34efdf9d9daa566a15ed50ebad3f212b2866a6681205e40800a086477">
+
+
+
+<title>{{ site_data.name }} -{{ site_data.title }}</title> 
+<meta name="description" content="{{ site_data.description }}">
+<meta name="author" content="{{ site_data.author }}">
+<meta property="og:title" content="{{ site_data.name }} - {{ site_data.title }}">
+<meta property="twitter:title" content="{{ site_data.name }} - {{ site_data.title }}">
+<meta property="og:description" content="{{ site_data.description }}">
+<meta property="twitter:description" content="{{ site_data.description }}">
+<meta property="og:type" content="website">
+<meta property="twitter:card" content="summary_large_image">
+<meta property="og:image" content="{{request.scheme}}://{{site_data.domain}}{{ site_data.og_image }}">
+<meta property="twitter:image" content="{{request.scheme}}://{{site_data.domain}}{{ site_data.og_image }}">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<link rel="canonical" href="{{ request.build_absolute_uri }}">
+<meta property="twitter:url" content="{{ request.build_absolute_uri }}">
+<meta name="twitter:site" content="@selfurlxyz" />
+<meta name="twitter:creator" content="@selfurlxyz" /> 
+<meta name="category" content="company"/>
+
+<!-- Favicon -->
+<link rel="apple-touch-icon" sizes="120x120" href="{{request.scheme}}://{{site_data.domain}}{{ site_data.favicon }}">
+<link rel="icon" type="image/png" sizes="32x32" href="{{request.scheme}}://{{site_data.domain}}{{ site_data.favicon }}">
+<link rel="icon" type="image/png" sizes="16x16" href="{{request.scheme}}://{{site_data.domain}}{{ site_data.favicon }}">
+<link rel="manifest" href="{% url 'main:webmanifest' %}">
+<link rel="mask-icon" href="{{request.scheme}}://{{site_data.domain}}{{ site_data.mask_icon }}" color="#ffffff">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="theme-color" content="#ffffff">

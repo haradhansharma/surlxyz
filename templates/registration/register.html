@@ -1,0 +1,77 @@
+{% extends "layouts/base.html" %}
+
+{% load static %}
+
+{% block robot %}<meta name="robots" content="noindex">{% endblock %}
+
+{% block content %}
+<div class="mt-5"></div>
+<div class="row align-items-center g-lg-5 py-5">    
+    <div class="col-lg-7 text-start">
+        <h1 class="display-4 fw-bold lh-1 mb-3 text-primary">{{site_data.title}}</h1>
+        <div class="mt-2">
+            {# {% include "layouts/ads_boom_your_identity.html" %} #}
+        </div>
+        <p class="col-lg-10 fs-5">{{site_data.description|safe}}</p>
+    </div>
+    <div class="col-md-10 mx-auto col-lg-5">     
+        
+        
+        <form method="POST" class="p-4 p-md-5 border rounded-3 bg-light" novalidate="" autocomplete="off">
+            {% csrf_token %}            
+            <div class="form-floating mb-3">
+                {{ form.username }}
+                <label class="text-primary" for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+                <span class="text-start text-danger">{{ form.username.errors }}</span>
+            </div>
+
+            <div class="form-floating mb-3">
+                {{ form.email }}
+                <label class="text-primary" for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+                <span class="text-start text-danger">{{ form.email.errors }}</span>
+            </div>
+            
+            <div class="form-floating mb-3">
+                {{ form.password1 }}
+                <label class="text-primary" for="{{ form.password1.id_for_label }}">{{ form.password1.label }}</label>
+                <span class="text-start text-danger">{{ form.password1.errors }}</span>
+            </div>
+
+            <div class="form-floating mb-3">
+                {{ form.password2 }}
+                <label class="text-primary" for="{{ form.password2.id_for_label }}">{{ form.password2.label }}</label>
+                <span class="text-start text-danger">{{ form.password2.errors }}</span>
+            </div>
+           
+            <div class="form-floating mb-3">                
+                {{ form.captcha }}                
+                <span class="text-start text-danger">{{ form.captcha.errors }}</span>
+            </div>
+
+
+
+            <button type="submit" class="btn btn-primary ms-auto"> Register	</button>
+            
+                      
+            <hr class="my-4 text-primary">
+            <small class="text-muted">By clicking Sign up, you agree to the terms of use.</small>
+            <div class="text-muted"> Already have an account?   <a href="{% url 'login' %}" class="text-dark">Login</a> </div>
+        </form>
+        
+        <div class="mt-2">
+    
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+{% endblock content %}
+
+

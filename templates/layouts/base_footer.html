@@ -1,0 +1,31 @@
+
+  
+
+<footer class="mt-auto py-3 bg-light">
+    <div class="container">
+        <div class="row text-center align-items-center justify-content-center mb-4">
+            <div class="footer-menu">
+                {% for fm in footer_menu %}
+                <a href="{{fm.url}} " class="me-2 {% if request.path == fm.url %} border-bottom {% endif %}">{{fm.title}}</a>
+                {% endfor %}
+           
+            </div>
+            <p>&copy; All Right Reserved By <a href="https://www.sincehence.co.uk/" target="_blank" class="link-primary">SINCEHENCE LTD</a>,
+                Developed by <a href="https://hrdnsh.com" target="_blank" class="link-warning">Haradhan Sharma</a>.</p>
+        </div>
+
+        
+
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+

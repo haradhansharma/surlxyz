@@ -1,0 +1,106 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {% block robot %}{% endblock %}
+
+{% include 'includes/meta.html' %}
+
+<link type="text/css" rel="stylesheet" href="{% static 'css/custom.css' %}" rel="stylesheet"> 
+
+<script src="{% static 'vendor/htmx/htmx.min.js' %}" ></script>
+<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+
+{% block stylesheets %}{% endblock stylesheets %}
+
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+    {% include "layouts/base_header.html" %}   
+    
+    <main class="flex-fill">
+        <section class="container">
+            {% block content %}{% endblock content %}     
+        </section>
+        <div>
+          <div class="modal fade" id="concentDialog" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="concentDialogLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg custom-bottom-modal">
+              <div class="modal-content">
+                <div class="modal-header bg-primary-gradient">
+                  <h5 class="modal-title title" id="concentDialogLabel">Consent Required</h5>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        In order to browse this website, you must accept our
+                        {% for cp in consent_pages %}
+                        {% if forloop.last %}and {% endif %}
+                        <span><a target="_blank" class="link-danger" href="{{cp.get_absolute_url}}">{{cp.title}}</a></span>
+                        {% if forloop.last %}. {% else %}, {% endif %}
+                        {% endfor %}
+                                      
+                      </p>
+                      <p>
+                        By clicking "Accept", you confirm that you have read and agreed to our policies. 
+                        If you disagree with our policies after accepting, you can clear your browser's cookies or stop browsing for 1 hr to revoke your consent.
+                      </p>
+                </div>
+                <div class="modal-footer bg-primary-gradient">
+                  <button type="button" class="btn btn-secondary accept-btn" data-bs-dismiss="modal">Accept</button>
+                  <button type="button" class="btn btn-primary">Decline</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </main>
+
+    {% include "layouts/base_footer.html" %}
+
+
+
+    
+
+
+    
+      {% include 'includes/scripts.html' %}        
+    
+      {% url 'policy_concent:set_concent' as concent_url %}     
+      <script>    
+        window.addEventListener('load', function() {
+            var concent_given = '{{consent_given}}';
+            // Get the modal element by its ID
+            var modal = document.getElementById('concentDialog');
+            
+            // Create a new bootstrap modal instance
+            var bootstrapModal = new bootstrap.Modal(modal);     
+
+            if (concent_given === 'False' || concent_given === false) {                   
+            
+                // Show the modal
+                bootstrapModal.show();
+            
+                // Get the "Close" button element
+                var acceptButton = document.querySelector('#concentDialog .modal-footer .accept-btn');    
+
+                // Add a click event listener to the "Close" button
+                acceptButton.addEventListener('click', function() {    
+                    // Construct the silent URL with the parameter
+                    var silentUrl = "{{concent_url}}";        
+                    // Call the silent URL
+                    var silentRequest = new XMLHttpRequest();
+                    silentRequest.open('GET', silentUrl, true);
+                    silentRequest.send();                    
+                }); 
+            } else {
+                bootstrapModal.hide();
+            }
+        });
+      </script>
+
+    {% block javascripts %}{% endblock javascripts %}
+
+          
+  </body>
+  </html>

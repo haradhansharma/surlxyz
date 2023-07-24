@@ -1,0 +1,55 @@
+{% load static %}
+<div class="col-lg-8 text-start align-center">
+    {% if messages %}                                                     
+        {% for message in messages %}
+        <em class="text-danger ">{{ message }}</em> 
+        {% endfor %} 
+    {% else %} 
+    {% endif %} 
+</div>  
+
+{% if form %}
+<form class="alert alert-info" hx-post="{% url 'selfurl:create_version' data.short_url %}" hx-target="#version_area" hx-swap="innerHTML">
+    {% csrf_token %}
+    <div class="input-group">
+        <span class="input-group-text">{{site_data.domain}}/</span>
+        {{ form.version }}
+        <input type="submit" class="btn btn-primary" value="Create"/>
+    </div>
+    <span class="text-error invalid-feedback">{{ form.errors }}</span>
+</form>
+<div class="row justify-content-center g-4">
+<h4 class="custom-underline text-center fs-2">Craft a New Version of Your URL</h4>
+<p class="text-center">
+    Enhance your link's appeal and share it uniquely by simply entering the desired URL path after our domain in the box above. 
+    Instantly create a fresh version that stands out! To ensure uniqueness, we'll notify you if the version already exists, 
+    prompting you to select an alternative. Click the 'Create' button to bring your custom version to life and start sharing it with the world!<span class="end-icon"></span>
+</p>
+</div>
+
+
+{% else %}
+    {% if versions %} 
+        <div class="row">
+            <div class="col">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Version</th>
+                            <th>Clicked</th>
+                            <th>Created</th>
+                        </tr>
+                    </thead>
+                    <tbody >
+                        {% include 'selfurl/versions_table_body.html' %} 
+                    </tbody>
+                </table>
+            </div>
+        </div>          
+        <a class="btn btn-primary" hx-get="{% url 'selfurl:create_version' data.short_url %}" hx-target="#version_area" hx-swap="innerHTML">Add More</a>  
+        
+    {% else %}           
+            <p class="alert alert-info">No Version Found!<a class="btn btn-primary" hx-get="{% url 'selfurl:create_version' data.short_url %}" hx-target="#version_area" hx-swap="innerHTML">Click Here</a> to create one!</p>
+
+    {% endif %}
+{% endif %}

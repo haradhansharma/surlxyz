@@ -1,0 +1,39 @@
+{% load selfurl_tags %}
+{% if form %}
+    <form hx-post="{% url 'selfurl:set_expire' item.id %}" hx-target="#expire_area{{item.id}}" hx-swap="innerHTML">
+        {% csrf_token %}
+        <div class="position-relative mt-3">
+            <div class="input-group mb-3">
+            {{ form.expires_at }}
+            <input type="submit" class="btn btn-primary" value="Set"/>        
+            </div>
+        </div>
+        <span class="text-error invalid-feedback">{{ form.expires_at.errors }}</span>
+    </form>
+
+    <div class="col-lg-8 text-start align-center">
+        {% if messages %}                                                     
+            {% for message in messages %}
+            <em class="text-danger ">{{ message }}</em> 
+            {% endfor %} 
+        {% else %} 
+        {% endif %} 
+    </div> 
+{% else %}
+    <a data-bs-toggle="tooltip" data-bs-placement="top" title="Will not work after selected date! mm/dd/yyyy will set for infinity." class="text-primary mb-0" href="" hx-get="{% url 'selfurl:set_expire' item.id %}" hx-target="#expire_area{{item.id}}" hx-swap="innerHTML">
+        <b>Expires at</b> 
+        {% if item.expires_at == none %}Infinity{% else %}{{item.expires_at}}{% endif %}*
+    </a><br>    
+    <small>* Click on the Expire at. URL will not accessible after selected date! mm/dd/yyyy never expire.</small>
+    <div class="d-flex justify-content-between align-items-center border-top border-bottom py-2">
+        <div class=" mb-0 {% if item.active == True  %}  text-success {% else %} text-danger {% endif %} ">
+        Active__{{item.active}}**         
+        {% if item.long_url|is_reported  %}   
+        || 
+        <span class="text-danger"><b>Reported***</b></span><br> 
+        <small>*** we have {{ item.long_url|report_que }} que to check reported URL and we need atleast 5 min to 24 hrs to check each reported URL. IF check found that it is reported wrong then will be activated if expire date demand</small>
+        {% endif %}
+        </div>          
+    </div>
+    <small>** Active True or False Changed based on the expire date and by checking is it reported as melicious or not.</small>
+{% endif %}

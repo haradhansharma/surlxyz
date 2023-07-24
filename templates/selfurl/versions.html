@@ -1,0 +1,73 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% block robot %}<meta name="robots" content="noindex">{% endblock %}
+{% load selfurl_tags %}
+
+{% block content %}
+
+<div class="px-4 py-5 mb-5 text-center  border-bottom ">
+    <img class="d-block mx-auto mb-4" src="{{ site_data.favicon }}" alt="{{site_data.title}}" width="72" height="72">
+    <h1 class="display-5 fw-bold text-primary">{{site_data.title}}</h1>
+    <p class="text-center text-muted">
+        The URL shorted from the URL: {{data.long_url}}
+    </p>
+    <div class="mt-2">
+        
+    </div>
+    <div class="col-lg-12 mx-auto">
+        <p class="lead mb-4">{{site_data.description|safe}}</p>       
+    </div>
+</div>
+
+
+<div class="border-bottom mb-5 pb-4">
+    <div class="row justify-content-center g-4">
+        <h4 class="custom-underline-blue text-center fs-2"> Version History </h4>        
+        <p class="text-center mt-0 mb-0 text-muted">
+            Keep track of each version's performance with detailed click records and creation dates. 
+            Monitor the click analytics for every customized link and gain insights into its popularity and engagement. 
+            Our Version History section empowers you to optimize your URL strategies and make data-driven decisions. 
+            Stay informed about the success of each variation and leverage this valuable information to enhance your online presence</p>
+    </div>
+    <div class="row justify-content-center g-4">
+        <div id ="version_area" class="col-12">
+            {% include 'selfurl/create_versions.html' %}       
+        </div> 
+    </div>
+
+    {% if not data.long_url|is_reported %}
+    <div class="row justify-content-center g-4">
+        <h4 class="custom-underline-green text-center fs-2"> PDF Export for Visitor History Table </h4>        
+        <p class="text-center mt-0 mb-0 text-muted">
+            With our PDF Export feature, you can now export the comprehensive visitor history data to 
+            gain valuable insights into your URL performance. The exported PDF includes a detailed table that presents your visitor data in a clear and organized manner.<span class="end-icon-green"></span>
+        </p>
+
+        <p class="text-center mt-0 mb-0 text-muted">
+            In the table, the first row represents your main URL, and the "Clicked" column displays the cumulative clicks across all versions. This inclusive count combines clicks from all versions of your shortened URL, providing a clear overview of the overall performance.<span class="end-icon-green"></span>
+        </p>
+
+        <p class="text-center mt-0 mb-0 text-muted">
+            Following the first row, subsequent rows in the table display clicks for each individual version of your URL. This breakdown allows you to identify the clicks specific to each version, facilitating a comprehensive analysis of user engagement.<span class="end-icon-green"></span>
+        </p>
+
+        <p class="text-center mt-0 mb-0 text-muted">
+            By exporting this data, you can effortlessly track the popularity and effectiveness of each version, helping you make data-driven decisions to optimize your online presence.<span class="end-icon-green"></span>
+        </p>
+        <p class="text-center mt-0 mb-0 text-muted">
+            Take advantage of our PDF Export feature today to delve deeper into your visitor history and unlock actionable insights for a more successful link strategy.<span class="end-icon-green"></span>
+        </p>
+        <p class="text-center mt-4 mb-4">
+            <a class="btn btn-primary" href="{% url 'selfurl:generate_click_record_pdf_view' data.short_url %}" target="_blank">Export PDF</a>        
+        </p>
+    </div>
+    {% endif %}
+
+
+</div>
+
+
+
+
+{% endblock %}
+

@@ -1,0 +1,118 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% load selfurl_tags %}
+ 
+{% block robot %}<meta name="robots" content="noindex">{% endblock %}
+
+
+{% block content %}
+
+<div class="d-flex align-items-center p-3 my-3 text-primary bg-warning rounded shadow-sm">
+    <img class="me-3" src="{{  site_data.og_image }}" alt="{{request.user.username}}" width="48" height="48">
+    <div class="lh-1">
+        <h1 class="h6 mb-0 text-primary lh-1">Shortened URL</h1>
+        <small>Since {{created_since}}</small>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-lg-6 text-start align-center">
+        {% if messages %}
+        {% for message in messages %}
+        <em class="text-danger ">{{ message }}</em>
+        {% endfor %}
+        {% else %}
+        {% endif %}
+    </div>
+</div>
+
+
+<div class="my-3 p-3 bg-body card">
+    <div class="text-center align-items-center justify-content-center border-bottom">
+        <h1 class="text-danger ">{{site_data.title}}</h1>
+
+        <p class="text-primary ">{{site_data.description}}</p>
+        {# {% include "layouts/ads_display.html" %} #}
+    </div>
+    <div class="row d-flex align-items-center justify-content-center">
+        <div class="col-lg-12">
+            <div class="mt-2">
+                {# {% include "layouts/ads_boom_your_identity.html" %} #}
+            </div>
+            {% for item in items %}
+            <div class="text-muted p-3 mb-3 border border-2 border-secondary rounded-3 bg-light bg-gradient">
+                <p class="bg-secondary p-3 text-white text-center rounded rounded-3">
+                    {{item.clicked}} <br> <small>Clicks</small>
+                </p>
+                <div
+                    class="pb-0 mb-0 small lh-sm border-bottom align-items-center justify-content-center d-block my-auto">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="col-lg-6 p-2">
+                            <strong class="d-block text-gray-dark">
+                                <a class="text-primary mb-0" href="/{{item.short_url}}"
+                                    target="_blank">{{site_data.domain}}/{{item.short_url}}</a>
+                            </strong>
+                            <div class="py-2">
+                                Created On__{{item.created}}                        
+                            </div>
+                        </div>
+                        <div class="col-lg-6 p-2" id="expire_area{{item.id}}">
+                            {% include 'selfurl/set_expire.html' with item=item %}
+                        </div>
+                    </div>
+                    
+                    <div class="card-footer text-strat ps-0">
+                        {{item.long_url}}
+                    </div>
+                    <div class="justify-content-end align-items-end text-end mt-2 mb-1">
+                        {% if request.user.is_paid or request.user.is_superuser %}
+                        <a class="badge btn-danger" href="{% url 'selfurl:log_details' item.short_url  %}">Visitor's Logs </a>
+                        {% endif %}
+                        {% if not item.long_url|is_reported %}
+                        <a class="badge btn-success" target="_blank" href="{% url 'selfurl:generate_visitor_log_pdf' item.short_url  %}">Analytic PDF</a>
+                        <a class="badge btn-success" target="_blank" href="{% url 'selfurl:generate_click_record_pdf_view' item.short_url %}">Clicked PDF</a>
+
+                        <a class="badge btn-primary" href="{% url 'selfurl:versions' item.short_url  %}">Versions </a>
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+            {# {% include "layouts/ads_infeed.html" %} #}
+            {% endfor %}
+        </div>
+        <div class="col-lg-6">
+            {# {% include "layouts/ads_multiplex.html" %} #}
+        </div>
+    </div>
+
+    <div class="d-flex align-items-end justify-content-end">
+        <small class="d-block text-end mt-3 ">
+            <div class=" border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between">
+                <nav aria-label="Page navigation ">
+                    <ul class="pagination justify-content-center">
+                        {% if items.has_previous %}
+                        <li class="page-item"><a class="page-link" href="?page=1">&laquo; first</a>
+                        </li>
+                        <li class="page-item"><a class="page-link"
+                                href="?page={{ items.previous_page_number }}">previous</a></li>
+                        {% endif %}
+
+                        <li class="page-item page-link"> Page {{ items.number }} of {{items.paginator.num_pages }}.
+                        </li>
+
+                        {% if items.has_next %}
+                        <li class="page-item"><a class="page-link" href="?page={{ items.next_page_number }}">next</a>
+                        </li>
+                        <li class="page-item"> <a class="page-link" href="?page={{ items.paginator.num_pages }}">last
+                                &raquo;</a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        </small>
+    </div>
+    {# {% include "layouts/ads_display.html" %} #}
+</div>
+
+{% endblock %}

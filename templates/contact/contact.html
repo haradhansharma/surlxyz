@@ -1,0 +1,97 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block robot %}<meta name="robots" content="index">{% endblock %}
+
+{% block content %}
+
+
+<div class="px-4 py-5 mb-5 text-center  border-bottom ">
+
+    {% if messages %}  
+    <div class="col-12 text-center">
+        <div class="alert alert-secondary shadow-soft" role="alert">                            
+            {% for message in messages %}
+            <span class="alert-inner--text">{{ message }}</span>
+            {% endfor %}                            
+        </div>                        
+    </div>
+    {# {% include "layouts/ads_display.html" %} #}
+    {% endif %}
+
+
+    <img class="d-block mx-auto mb-4" src="{{ site_data.favicon }}" alt="{{site_data.name}}" width="72" height="72">
+    <h1 class="display-5 fw-bold text-primary">{{site_data.title|safe}}</h1>
+    <div class="col-lg-12 mx-auto">
+        <p class="lead mb-4">{{site_data.description|safe}}.</p>        
+    </div>
+    <div class="mt-2">
+        {# {% include "layouts/ads_boom_your_identity.html" %} #}
+    </div>
+</div>
+
+
+<div class="border-bottom mb-5">
+    <h2 class="pb-2 border-bottom border-3 border-primary text-danger">Contact us via the form below.</h2>
+    {# {% include "layouts/ads_display.html" %} #}
+    <div class="row g-4 py-3 row-cols-1">
+        <div class="col-12">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="row g-3">
+                    <div class="form-group">                   
+                        {{ form.name.errors }}
+                        {{ form.name }}
+                    </div>
+                    <div class="input-group">
+                        {{ form.phone_number.errors }}
+                        {{ form.phone_number }}
+                    </div>
+                
+                    <div class="form-group">
+                        {{ form.email.errors }}
+                        {{ form.email }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form.subject.errors }}
+                        {{ form.subject }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form.message.errors }}
+                        {{ form.message }}
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-floating">
+                            {{ form.captcha }}
+                            
+                        </div>
+                        <span class="text-error invalid-feedback">{{ form.captcha.errors }}</span>
+                    </div>
+                
+
+                    <div class="col-12">
+                        <button class="btn btn-primary w-100 py-3" type="submit">Send Message</button>
+                    </div>
+                </div>
+            </form>
+
+            {# {% include "layouts/ads_display.html" %} #}
+        </div>
+
+        <div class="col-lg-12 mt_md--30 mt_sm--30">
+            <div class="google-map-style-1">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2482.231949306149!2d-0.09149527297786142!3d51.5273054092484!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48761ca66eeaa42d%3A0xfeaa9eff15ff6f43!2sLondon%20EC1V%202NX%2C%20UK!5e0!3m2!1sen!2sbd!4v1687598976109!5m2!1sen!2sbd" width="100%" height="550" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+    {% endblock %}
+
+

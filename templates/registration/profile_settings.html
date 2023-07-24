@@ -1,0 +1,178 @@
+{% extends "layouts/base.html" %}
+
+{% load static %}
+{% block robot %}<meta name="robots" content="noindex">{% endblock %}
+{% block content %}
+
+
+<div class="px-4 py-5 mb-5 text-center  border-bottom ">
+
+    {% if messages %}
+    <div class="col-12 text-center">
+        <div class="alert alert-secondary shadow-soft" role="alert">
+            {% for message in messages %}
+            <span class="alert-inner--text">{{ message }}</span>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+
+    <div class="d-flex justify-content-center align-items-center">
+        
+        {% if user.get_profile.avatar %}
+        <div class="d-block mx-auto mb-4 position-relative ">
+            <img class="img-fluid rounded-circle shadow" src="{{ user.get_profile.avatar.url }}" alt="{{user.get_full_name}}" title="{{user.get_full_name}}" width="250px" height="250px">   
+            <a class="position-absolute top-50 end-0 translate-middle rounded-circle bg-light btn" href="{% url 'accounts:delete_avatar' %}">X</a> 
+        </div>  
+        {% else %}
+        <form class="card p-5 mb-5 overflow-hidden" style="width: 300px;" method="post" id="avatar_form" action="" enctype="multipart/form-data" >
+            {% csrf_token %}
+            <div class="">
+                <div class="form-floating">
+                    {{ avatar_form.avatar }}                   
+                </div>
+                <span class="text-error invalid-feedback">{{ avatar_form.avatar.errors  }}</span>
+            </div>   
+            <input class="btn btn-primary" name="avatar_form" name="avatar_form" type="submit"  value="Upload"> 
+
+        </form> 
+        {% endif %}  
+      
+    </div>
+
+
+    <h1 class="display-5 fw-bold text-primary">{{site_data.title}}</h1>
+    <div class="col-lg-12 mx-auto">
+        <p class="lead mb-4">{{site_data.description}}.</p>
+    </div>
+</div>
+
+
+<div class="border-bottom mb-5">
+    <h2 class="pb-2 border-bottom border-3 border-primary text-danger">Account Information</h2>
+    <div class="row g-4 py-3 row-cols-1">
+        <div class="col-12">
+            <form method="post" id="user_form" action="">
+                <div class="row g-3">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6 p-2">
+                            <div class="form-floating">
+                                {{ user_form.username }}
+                                <label class="mb-2 text-muted"  for="{{ user_form.username.id_for_label }}">{{ user_form.username.label }}</label>
+                            </div>
+                            <span class="text-error invalid-feedback">{{ user_form.username.errors }}</span>
+                        </div>
+
+                        <div class="col-md-6 p-2">
+                            <div class="form-floating">
+                                {{ user_form.first_name }}
+                                <label class="mb-2 text-muted" for="{{ user_form.first_name.id_for_label }}">{{ user_form.first_name.label }}</label>
+                            </div>
+                            <span class="text-error invalid-feedback">{{ user_form.first_name.errors  }}</span>
+                        </div>
+
+                        <div class="col-md-6 p-2">
+                            <div class="form-floating">
+                                {{ user_form.last_name }}
+                                <label class="mb-2 text-muted" for="{{ user_form.last_name.id_for_label }}">{{  user_form.last_name.label }}</label>
+                            </div>
+                            <span class="text-error invalid-feedback">{{ user_form.last_name.errors  }}</span>
+                        </div>
+
+                        <div class="col-md-6 p-2">
+                            <div class="form-floating">
+                                {{ user_form.email }}
+                                <label class="mb-2 text-muted" for="{{ user_form.email.id_for_label }}">{{ user_form.email.label }}</label>
+                            </div>
+                            <span class="text-error invalid-feedback">{{ user_form.email.errors }}</span>
+                        </div>
+
+
+
+                        <div class="col-md-12 p-2">
+                            <div class="input-group">
+                                {{ user_form.phone }}                                
+                            </div>
+                            <span class="text-error invalid-feedback">{{ user_form.phone.errors }}</span>
+                        </div>
+
+                        <div class="col-md-6 p-2">
+                            <div class="form-floating">
+                                {{ user_form.orgonization }}
+                                <label class="mb-2 text-muted"
+                                    for="{{ user_form.orgonization.id_for_label }}">{{ user_form.orgonization.label }}</label>
+                            </div>
+                            <span class="text-error invalid-feedback">{{ user_form.orgonization.errors  }}</span>
+                        </div>
+
+                        <div class="col-12 p-2">
+                            <input class="btn btn-primary w-100 py-3" name="user_form" type="submit"
+                                value="Update">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="border-bottom mb-5">
+    <h2 class="pb-2 border-bottom border-3 border-primary text-danger">Profile Information</h2>
+    <div class="row g-4 py-3 row-cols-1">
+        <div class="col-12">
+            <form method="post" id="profile_form" action="">
+                <div class="row g-3">
+                    {% csrf_token %}                    
+                    <div class="row">
+                        <div class="col-md-12 p-2">
+                            <div class="form-floating">
+                                {{ profile_form.about }}
+                                <label class="mb-2 text-muted"
+                                    for="{{ profile_form.about.id_for_label }}">{{ profile_form.about.label }}</label>
+                            </div>
+                            <span class="text-error invalid-feedback">{{ profile_form.about.errors }}</span>
+                        </div>
+
+                        <div class="col-md-6 p-2">
+                            <div class="form-floating">
+                                {{ profile_form.location }}
+                                <label class="mb-2 text-muted"
+                                    for="{{ profile_form.location.id_for_label }}">{{ profile_form.location.label }}</label>
+                            </div>
+                            <span class="text-error invalid-feedback">{{ profile_form.location.errors  }}</span>
+                        </div>
+
+                        <div class="col-md-6 p-2">
+                            <div class="form-floating">
+                                {{ profile_form.birthdate }}
+                                <label class="mb-2 text-muted"
+                                    for="{{ profile_form.birthdate.id_for_label }}">{{ profile_form.birthdate.label }}</label>
+                            </div>
+                            <span class="text-error invalid-feedback">{{ profile_form.birthdate.errors }}</span>
+                        </div>
+
+                        <div class="col-12 p-2">
+                            <input class="btn btn-primary w-100 py-3" name="profile_form"
+                                form="profile_form" type="submit" value="Update">
+                        </div>
+                    </div>
+                </div>                        
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

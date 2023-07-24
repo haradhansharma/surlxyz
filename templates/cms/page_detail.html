@@ -1,0 +1,20 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block robot %}<meta name="robots" content="index">{% endblock %}
+
+{% block content %}
+<div class="px-4 py-5 mb-5 text-center  border-bottom ">
+    <img class="d-block mx-auto mb-4" src="{{ site_data.favicon }}" alt="{{site_data.title}}" width="72" height="72">
+    <h1 class="display-5 fw-bold text-primary">{{site_data.title}}</h1>
+    <div class="mt-2">
+        
+    </div>
+    
+</div>
+
+{{ page.body|safe }}
+
+
+{% endblock %}
+

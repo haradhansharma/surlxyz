@@ -1,0 +1,330 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% block robot %}<meta name="robots" content="index">{% endblock %}
+{% block content %}
+
+<div class="px-4 py-5 mb-5 text-center  border-bottom ">
+    <img class="d-block mx-auto mb-4" src="{{ site_data.favicon }}" alt="{{site_data.title}}" width="72" height="72">
+    <h1 class="display-5 fw-bold text-primary">{{site_data.title}}</h1>
+    <div class="mt-2">
+        
+    </div>
+    <div class="col-lg-12 mx-auto">
+        <div class="container bg-image-container d-flex flex-column align-items-start" style="background-image: url('{% static 'doodle/top_to_btm.svg' %}'); background-repeat: no-repeat; background-position: left bottom; min-height: 100px;">
+            <div class="lead mb-4">{{ site_data.description|safe }}</div>
+        </div>      
+    </div>
+    <div class="col-lg-12 mx-auto">
+        <div id="url_response" class="row justify-content-center">
+            {% include 'selfurl/makeshort.html' %}
+        </div>
+    </div>
+</div>
+
+<div class="border-bottom mb-5">
+    <div class="row justify-content-center">
+        <h2 class="pb-2 border-bottom border-3 border-primary text-danger">Free Features Overview</h2>
+        <ul class="list-unstyled">
+            <li class="mb-2">
+                <b class="custom-underline">URL Versioning:</b> Take control of your shortened links with URL versioning. Keep the original short URL intact while creating unlimited versions of the same link. 
+                Easily share different versions for specific campaigns, audiences, or marketing channels while tracking all click data under the main short URL.
+            </li>
+
+            <li class="mb-2">
+                <b class="custom-underline">Click Tracking with Comprehensive Statistics: </b> Harness the power of in-depth click tracking analytics with our free service. 
+                Get access to a comprehensive statistics page that provides you with valuable insights into the performance of your shortened links. 
+                Discover the total number of clicks, click distribution across countries with intuitive pie charts, and much more.
+            </li>
+
+            <li class="mb-2">
+                <b class="custom-underline">Downloadable PDF Reports: </b> Stay informed and share performance metrics easily with our downloadable PDF reports. 
+                The reports include a detailed overview of total clicks, country-wise percentage analytics, and a comprehensive visitor 
+                log that includes information on visitor agents, operating systems, countries, and visiting times.
+            </li>
+
+            <li class="mb-2">
+                <b class="custom-underline">Visitor Log: </b> Gain a deeper understanding of your audience with our detailed visitor log. Track visitor agent and OS information, 
+                along with their country and visiting time. Use this data to refine your marketing strategies and better cater to your audience's preferences.
+            </li>
+
+            <li class="mb-2">
+                <b class="custom-underline">Malicious URL Reporting and Protection:</b> Join our commitment to maintaining a safer online community. If you come across any suspicious or 
+                potentially harmful URLs, report them through our system. Upon receiving a report, we promptly verify the URL using 
+                the <a rel="nofollow" href="https://www.virustotal.com/" target="_blank">VirusTotal API</a>.  for thorough analysis.
+            </li>
+
+            <li class="mb-2">
+                <b class="custom-underline">Instant Protection for Users:</b>  If a URL is identified as malicious, we take immediate action to protect our users. 
+                The reported URL is swiftly blocked to prevent any potential harm or risks.
+            </li>
+
+            <li class="mb-2">
+                <b class="custom-underline">Safe and Reliable Verification:</b> To ensure the utmost accuracy, we also perform periodic checks on reported URLs as per our schedule. 
+                If a previously blocked URL is found to be safe and free from malicious content, 
+                it is promptly unblocked, ensuring that user links remain accessible to visitors.
+            </li>
+
+            <li class="mb-2">
+                <b class="custom-underline">Link Expiration Control:</b> Stay in command of your shortened URLs with our link expiration control feature. Easily manage the active status of 
+                your links through our intuitive statistics page. Users can view and distinguish between active and inactive URLs, making it simple to track the 
+                accessibility of each link.
+            </li>
+            <li class="mb-2">
+                <b class="custom-underline">Never Expire Option:</b> Leave the link expiration date blank, and your URL will remain active indefinitely. Perfect for permanent sharing and evergreen content.
+            </li>
+            <li class="mb-2">
+                <b class="custom-underline">Custom Expiration Dates:</b> Set a specific expiration date for your shortened URLs. When the date passes, the link will no longer be active, ensuring timely 
+                promotions and limited-time offers.
+            </li>
+            <li class="mb-2">
+                <b class="custom-underline">Instant Activation:</b> Increase or edit the expiration date to a future date, and the link will immediately become active, provided it has not been reported as malicious. 
+                Reactivate your URLs effortlessly for continued use.
+            </li>
+        </ul>
+
+        <p class="first-letter-wrap">
+            With these free features, our URL shortener empowers you to create and manage shortened URLs efficiently, enhance your online presence, 
+            and keep your links secure. Whether you're a casual user or a small business, these tools will help you make the most of your shortened 
+            links without any cost. Start using our service today and experience the convenience and benefits of shortened URLs!<span class="end-icon"></span>
+        </p>
+
+        <p class="first-letter-wrap">With our URL versioning feature, you can effortlessly manage multiple versions of your shortened URLs, making it easier to organize, share, and 
+            analyze your campaigns. Enjoy the benefits of click tracking and stay protected with our robust security measures - all at no cost! 
+            Start using our service today and unlock the potential of your shortened links.<span class="end-icon"></span>
+        </p>
+        <p class="first-letter-wrap">
+            With our free click tracking service, you'll have all the tools you need to analyze and optimize the effectiveness of your shortened URLs. 
+            Experience the power of data-driven insights and take your URL management to the next level. Sign up today to unlock the potential of your 
+            shortened links and drive better results for your campaigns.<span class="end-icon"></span>
+        </p>
+        <p class="first-letter-wrap">
+            Rest assured, our robust security measures guarantee that any URL blocked by mistake will be rectified swiftly and efficiently. 
+            Your trust and the safety of our users are of paramount importance to us. Together, we create a secure environment for sharing 
+            shortened URLs and ensure peace of mind for both users and their visitors.<span class="end-icon"></span>
+        </p>
+
+        <p class="first-letter-wrap">
+            With our link expiration control, you have the flexibility to manage the accessibility of your shortened URLs with ease. 
+            Whether you want links that never expire or temporary campaigns, this feature ensures your URLs are always up-to-date and optimally effective. 
+            Sign up now to take advantage of this powerful tool and make the most out of your shortened links.<span class="end-icon"></span>
+        </p>    
+        
+    </div>
+</div>
+
+
+<div class="border-bottom mb-5">
+    <div class="row justify-content-center">
+        <h2 class="pb-2 border-bottom border-3 border-primary text-danger">Premium Features Teaser</h2>
+        <p>Unlock the full potential of your URL shortening experience with our upcoming premium features. 
+            Gain a competitive edge and elevate your brand presence with a range of powerful tools designed to take your link management to the next level:
+        </p>
+        <ul class="list-unstyled">
+            <li class="mb-2">
+                <b class="custom-underline-blue">Branded Domains:</b> Create a seamless brand experience with personalized branded domains. 
+                Showcase your brand identity by using your own custom domains for shortened URLs. Strengthen your online presence and establish trust among your audience.
+            </li>
+
+            <li class="mb-2">
+                <b class="custom-underline-blue">Advanced Analytics:</b> Go beyond basic click tracking and dive into comprehensive analytics. Gain valuable insights with click location data, 
+                referral sources, user demographics, and powerful conversion tracking. Optimize your campaigns and make data-driven decisions.
+            </li>
+
+            <li class="mb-2">
+                <b class="custom-underline-blue">Link Retargeting:</b> Maximize your marketing efforts with link retargeting. Add retargeting pixels or tags to your shortened 
+                links for targeted advertising and remarketing campaigns. Re-engage potential customers and drive conversions with precision.
+            </li>
+
+            <li class="mb-2">
+                <b class="custom-underline-blue">Link Management:</b> Effortlessly manage and organize a vast number of shortened links. 
+                Our intuitive link management features empower you to categorize and streamline your links for easy access and sharing.
+            </li>
+
+            <li class="mb-2">
+                <b class="custom-underline-blue">Uptime Monitoring:</b> Stay informed about the availability and performance of your shortened links. 
+                Receive real-time notifications if any link experiences issues, ensuring a seamless user experience.
+            </li>
+
+            <li class="mb-2">
+                <b class="custom-underline-blue">API Access:</b> Integrate our powerful URL shortener service into your own applications or systems with our API access. 
+                Unlock endless possibilities for customization and seamless workflows.
+            </li>
+
+            <li class="mb-2">
+                <b class="custom-underline-blue">Password Protection:</b> Control access to your shortened links with password protection. 
+                Safeguard your valuable content and restrict access to authorized individuals only.
+            </li>
+
+            <li class="mb-2">
+                <b class="custom-underline-blue">Team Collaboration:</b> Collaborate efficiently with team members and assign different access levels. 
+                Share link management responsibilities and work seamlessly as a cohesive team.
+            </li>
+            <li class="mb-2">
+                <b class="custom-underline-blue">Vanity URLs:</b> Stand out from the crowd with vanity URLs that reflect your brand or desired keywords. 
+                Enhance brand recognition and boost your SEO efforts with memorable, branded links.
+            </li>
+            <li class="mb-2">
+                <b class="custom-underline-blue">Custom Link Previews:</b> Create visually appealing link previews when sharing shortened URLs on social media platforms. 
+                Display eye-catching page titles, descriptions, and images to captivate your audience.
+            </li>
+
+
+        </ul>
+
+        <p class="first-letter-wrap-blue">
+            <b>Stay Tuned:</b>Our premium features are just around the corner. Unlock a world of possibilities to enhance your brand, track performance, and elevate your marketing strategies. 
+            Be the first to experience the power of our premium plan. Sign up for updates and be part of the URL shortening revolution!<span class="end-icon-blue"></span>
+        </p>
+
+        <p class="text-center"> 
+            We send all the latest information about our services to our registered users. <span><a class="btn btn-sm btn-primary" href="{% url 'accounts:signup' %}">Sign Up</a></span> to stay tuned in your inbox.
+        
+        </p>
+        
+    </div>
+</div>
+
+<div class="border-bottom mb-5">
+    <div class="row justify-content-center">
+        <h2 class="pb-2 border-bottom border-3 border-primary text-danger">Information on Encryption: Securing Your Data</h2>
+        <p>At {{site_data.name}}, we take the security and privacy of your analytics data extremely seriously. 
+            When you use our URL shortening service with click tracking enabled, we utilize a sophisticated encryption system to safeguard your data from unauthorized access.
+        </p>
+        <ul class="list-unstyled">
+            <li class="mb-2">
+                <b class="custom-underline-green">Robust Encryption Protocol:</b> For each recorded click and its associated analytics data, we employ a state-of-the-art encryption protocol. 
+                This process involves generating a unique encryption key for each entry, ensuring that sensitive details, such as user agent data and geo data, are securely encrypted. 
+                This key is encoded and safely stored alongside the analytics log, guaranteeing that only authorized individuals can access the encrypted information.
+            </li>
+
+            <li class="mb-2">
+                <b class="custom-underline-green">User-Centric Data Access:</b> We prioritize your privacy when presenting analytics data to you, the URL creator. Whether accessed through our web page or PDF reports, 
+                we implement a secure mechanism to serve your data without compromising its encryption. User agent data and geo data are stored in encrypted python mechanism. When displayed, 
+                the data is decrypted and decoded, but it remains within a temporary, local variable. This ensures that the decrypted information is only visible to you, the authorized user, 
+                and remains protected from any external exposure.
+            </li>
+
+            <li class="mb-2">
+                <b class="custom-underline-green">Our Commitment to Confidentiality:</b> At {{site_data.name}}, we understand the importance of maintaining data confidentiality. 
+                Our encryption technology and privacy protocol guarantee that even our team cannot access encryption keys or view your analytics data. Your trust is of paramount 
+                importance to us, and we are dedicated to preserving the security of your information.
+            </li>
+
+            <li class="mb-2">
+                <b class="custom-underline-green">Malicious URL Reporting and Encryption:</b> As part of our commitment to maintaining a safe environment, we promptly encrypt any 
+                analytics data related to URLs reported as malicious or suspicious by users. Once flagged, the analytics data becomes inaccessible, providing an additional layer of 
+                security against potential threats. In addition to this, we take proactive measures to ensure the safety of our users and the broader community. If a URL is reported 
+                as malicious or suspicious, it will be immediately deactivated, and no one will be able to short that URL anymore. This swift action helps prevent any potential harm and 
+                protects our users from clicking on harmful links. Furthermore, to maintain the integrity of our platform, URLs that have been shortened by multiple users across various 
+                accounts will also be blocked instantly. This measure prevents the misuse of our service and ensures that only legitimate and safe URLs are shared using our URL shortener.
+            </li>
+
+            <li class="mb-2">
+                <b class="custom-underline-green">Secure Data Transmission:</b> To further safeguard your data, we use HTTPS and SSL encryption to secure data transmission between your device and our servers. 
+                This ensures that any information sent to or retrieved from our platform remains encrypted during transit.
+            </li>
+
+            <li class="mb-2">
+                <b class="custom-underline-green">Data Protection and Your Trust:</b> Your trust in our service is essential to us. That's why we continuously update our security measures, 
+                perform regular security audits, and adhere to industry best practices to ensure your data remains safe and confidential.
+            </li>
+
+        </ul>
+
+        <p class="first-letter-wrap-green">
+            Rest assured that your valuable analytics data is treated with the utmost importance and safeguarded through advanced encryption and robust security measures. At our core, 
+            we are committed to ensuring the privacy and confidentiality of your data, and our unwavering dedication to providing a safe and reliable URL shortener service is the 
+            cornerstone of our platform.<span class="end-icon-green"></span>
+        </p>
+        <p class="first-letter-wrap-green">
+            Your privacy is our priority, and we are committed to providing you with a secure and reliable URL shortener service. If you have any questions or concerns about data security, 
+            please feel free to reach out to our <a href="contact:contact">support team</a>.<span class="end-icon-green"></span>
+        </p>
+
+        
+        
+    </div>
+</div>
+
+<!-- Start Blog Area  -->
+<div class="border-bottom mb-5 pb-5">
+    <div class="row justify-content-center">
+
+        <h2 class="pb-2 border-bottom border-3 border-primary text-danger">Blog Section: Stay Informed with Our Latest Insights</h2>
+        <p>Welcome to our blog! Stay informed and inspired with our latest articles, industry insights, and tips on URL shortening, 
+            digital marketing, and more. Our blog is a valuable resource for marketers, business owners, and anyone looking to optimize their online presence.
+        </p>       
+       
+        {% for ln in latest_news %}
+        <div class="col-lg-4 col-md-6 col-12 d-flex">
+            <div class="card flex-fill">
+                <a href="{{ln.get_absolute_url}}"><img class="img-fluid"  src="{{ln.feature.url}}" alt="{{ln.title}}" title="{{ln.title}}"></a>                        
+                <div class="card-body">
+                    <ul class="list-inline">
+                        <li class="list-inline-item"><a href="{% url 'cms:user_blogs' ln.creator.id %}">{{ln.creator.username}}</a></li>
+                        <li class="list-inline-item">/</li>
+                        <li class="list-inline-item">{{ln.updated_at|date:"F j, Y" }}</li>
+                    </ul>
+                    <h4 class="title"><a href="{{ln.get_absolute_url}}">{{ln.title}}.</a></h4>
+                </div>
+                
+            </div>
+        </div>
+        {% endfor %}
+
+        <h4 class="custom-underline text-center fs-2">Explore Our Blog</h4>
+        <p> 
+            Looking for more valuable insights and expert tips? Explore our blog to access the full library of informative articles. 
+            Whether you're a seasoned marketer or just getting started, our blog has something to offer for everyone.<span class="end-icon"></span>
+        </p>
+
+        <h4 class="custom-underline-green text-center fs-2">Stay Updated</h4>
+        <p> 
+            Never miss a new article! Sign up for our newsletter to receive regular updates on the latest blog posts, product releases, and exclusive offers. 
+            Stay ahead in the digital landscape with our valuable content delivered straight to your inbox.<span class="end-icon-green"></span>
+        </p>
+        <p class="text-center">
+            <a class="btn btn-success" href="{% url 'cms:latest_blogs' %}">Read the Latest Blogs</a>
+        </p>
+        <p>
+            Clicking the <a href="{% url 'cms:latest_blogs' %}">Read the Latest Blogs</a> button will take you to the Latest Blog page, where you can delve into the full list of recent articles and find in-depth 
+            information on various topics related to URL shortening, marketing strategies, and more. Our blog is a gateway to knowledge and growth in the digital world.
+        </p>
+        <p>
+            Explore our blog today and discover how our insights can help you elevate your online presence and achieve your marketing goals. Happy reading!<span class="end-icon-blue"></span>
+        </p>
+        <h4 class="custom-underline-blue text-center fs-2"> Unlock the Full Potential! </h4>
+        <p class="text-center fs-4 mb-0 text-danger">Sign Up for Free Today</p>
+        <p class="text-center fs-6 text-success mt-0">With a free account, you get:</p>
+
+   
+        <ul class="ms-5 list-unstyled text-center mt-0">
+            <li class="mb-2"><b class="custom-underline-blue">Detailed Click Analytics:</b> Understand your audience better with comprehensive click tracking and detailed analytics.</li>
+            <li class="mb-2"><b class="custom-underline-blue">Customized URLs:</b> Create unlimited versions of your shortened URLs with our powerful customization options.</li>
+            <li class="mb-2"><b class="custom-underline-blue">Enhanced Security:</b> Report and block malicious and suspicious URLs, ensuring the safety of your audience.</li>
+        </ul>
+        <h4 class="custom-underline-green text-center fs-2"> Stay Ahead with Premium Features </h4>
+
+        <p class="text-center mb-0">
+            Exciting premium features are coming soon! By signing up now, you'll be the first to know when our premium plans launch. 
+            Get ready for advanced analytics, branded domains, link retargeting, and much more.<span class="end-icon-green"></span>
+        </p>
+        <p class="text-center mt-2">
+            Don't miss out on these game-changing features! Join our growing community and be part of the URL shortening revolution. Sign up today!.<span class="end-icon-green"></span>
+        </p>
+
+        <p class="text-center">
+            <a class="btn btn-success" href="{% url 'accounts:signup' %}">Sign Up</a>
+        </p>
+      
+    </div>
+</div>
+<!-- End Blog Area  -->    
+
+
+
+
+
+
+{% endblock %}
+

@@ -1,0 +1,21 @@
+{% if messages %}  
+<div class="col-12 text-center">
+    <div class="alert alert-secondary shadow-soft" role="alert">                            
+        {% for message in messages %}
+        <span class="alert-inner--text">{{ message }}</span>
+        {% endfor %}                            
+    </div>                        
+</div>
+{# {% include "layouts/ads_display.html" %} #}
+{% endif %}
+<div class="col-12">
+    <form class="text-end mt-2 mb-1" hx-post="{% url 'contact:post_reply' thread.id %}" hx-target="#justreply{{thread.id}}" hx-swap="innerHTML">
+        {% csrf_token %}
+        {{form.as_p}}       
+        <button class="badge btn-danger" type="submit">Submit Reply</button>
+        {% if request.user.is_superuser or request.user.is_staff %}
+        <button class="badge btn-danger" type="submit" hx-target="#justreply{{thread.id}}" hx-trigger="click" hx-vals='{"status": "close"}' hx-post = "{% url 'contact:post_reply' thread.id %}" hx-swap="innerHTML">Reply and Close</button>
+        {% endif %}
+    </form>
+    {# {% include "layouts/ads_display.html" %} #}
+</div>

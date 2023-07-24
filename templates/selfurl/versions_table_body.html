@@ -1,0 +1,24 @@
+{% load static %}
+
+    {% for version in versions %}                        
+    <tr>                            
+        <td><a href="{% url 'main:redirect_url' version.version %}">{{site_data.domain}}/{{version.version}}</a></td>
+        <td>{{version.clicked}}</td>
+        <td>{{version.created}}</td>                             
+    </tr>  
+    {% endfor %}    
+    {% if versions.has_next %}                                               
+        <tr id="replaceMe">
+            <td colspan="3" class="text-center">
+            <button class='btn btn-outline-primary' 
+                hx-get="{% url 'selfurl:create_version' data.short_url %}?page={{ versions.next_page_number }}"
+                hx-target = "#replaceMe"
+                hx-trigger="click"
+                hx-swap="outerHTML"
+                hx-vals='{"getpage": "getpage"}'>
+                Load More... 
+            </button>
+            <img class="htmx-indicator" src="{% static 'loading.gif' %}">
+            </td>
+        </tr>  
+      {% endif %}              

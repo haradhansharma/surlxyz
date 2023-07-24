@@ -1,0 +1,137 @@
+@import url('../vendor/bootstrap/css/bootstrap.min.css');
+@import url('../vendor/font-awesome/css/fontawesome.min.css');
+@import url('../vendor/font-awesome/css/solid.min.css');
+@import url('../vendor/font-awesome/css/brands.min.css');
+
+@import url('../css/bds.css');
+
+
+@media (max-width: 767px) {
+  .bg-image-container {
+    min-height: 150px;
+  }
+  .bg-image-container .lead {
+    font-size: 18px;
+    line-height: 1.4;
+  }
+}
+
+.custom-underline, .custom-underline-blue , .custom-underline-green {
+  display: inline-block;
+  background-size: 100% 0.2em; /* Adjust the height of the underline as needed */
+  background-repeat: repeat-x;
+  background-position: left bottom;
+  padding-bottom: 0.2em; /* Adjust the padding to match the underline height */
+
+
+  
+}
+
+.custom-underline {
+  background-image: url('../doodle/link_underline.svg');
+}
+.custom-underline-blue {
+  background-image: url('../doodle/link_underline_blue.svg');
+
+}
+.custom-underline-green {
+  background-image: url('../doodle/link_underline_green.svg');
+
+}
+
+.first-letter-wrap::first-letter, .first-letter-wrap-blue::first-letter, .first-letter-wrap-green::first-letter {
+  font-size: 3.0rem; 
+  line-height: 1; 
+  float: left;
+  margin-right: 0.01rem;  
+  font-weight: bold;
+}
+.first-letter-wrap::first-letter { 
+  color: var(--bs-danger);
+}
+.first-letter-wrap-blue::first-letter { 
+  color: var(--bs-blue);
+}
+.first-letter-wrap-green::first-letter { 
+  color: var(--bs-success);
+}
+
+.end-icon{
+  position: relative;
+}
+
+.end-icon::after, .end-icon-blue::after, .end-icon-green::after {
+  content: "";
+  display: inline-block;
+  width: 3em;
+  height: 1em;  
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-left: 0.03em;
+  /* position: absolute; */
+  /* bottom: 0; */
+}
+.end-icon::after {
+  background-image: url('../doodle/end_of_para.svg');
+}
+.end-icon-blue::after {
+  background-image: url('../doodle/end_of_para_blue.svg');
+}
+.end-icon-green::after {
+  background-image: url('../doodle/end_of_para_green.svg');
+}
+.text-justify {
+  text-align: justify!important;
+}
+
+
+.htmx-indicator{
+  opacity:0;
+  transition: opacity 500ms ease-in;
+  display: none;
+}
+.htmx-request .htmx-indicator{
+  opacity:1;
+  display: inline;
+
+}
+.htmx-request.htmx-indicator{
+  opacity:1;
+  display: inline;
+
+}
+
+.bg-teal {
+    background-color: #005C53;
+}
+.bg-darkteal {
+    background-color: #042940;
+}
+.bg-lightteal {
+    background-color: #9FC131;
+}
+.bg-floroyellow {
+    background-color: #DBF227;
+}
+.bg-beige {
+    background-color: #D6D58E;
+}
+
+.bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+  }
+
+  @media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+      font-size: 3.5rem;
+    }
+  }
+  main > .container {
+    padding: 60px 15px 0;
+  }
+
+  @import url('../vendor/aos/aos.css');

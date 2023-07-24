@@ -1,0 +1,59 @@
+{% load static %}
+
+<div id="indicator" class="htmx-indicator"><i class="fa-solid fa-arrows-rotate text-success fa-3x fa-spin-pulse"></i></div>
+
+{% if data %}
+    <div class="row g-3 align-items-center justify-content-center">
+        <div class="col-lg-10 alert alert-primary">
+            <h2 class="text-danger">Your Shortened URL</h2>
+            <div class="d-flex justify-content-center align-items-center">
+                <div class="col-auto me-2">
+                    <input id="urlresult" class="form-control" type="text"
+                        value="{{site_data.domain}}/{{data.short_url}}">
+                </div>
+                
+            </div>
+            <p class="mt-3">Share your link with ease! Just click the <span><button onclick="copy()" class="btn btn-sm btn-primary">Copy</button> </span>
+                button to grab the link and share it with your audience.</p><p class="mt-3"> Need more versions?
+                 No problem! Explore <span><a href="{% url 'selfurl:versions' data.short_url %}" class="btn btn-sm btn-warning">More Versions</a></span> to create limitless customized URLs. 
+                 Follow the instructions on the redirected page after clicking <span><a href="{% url 'selfurl:versions' data.short_url %}" >More Versions</a></span> to get started.</p>     
+    
+
+
+            <div class="row g-3 align-items-center">
+                <p><span class="text-danger">The short URL created from:</span> {{data.long_url}}</p>
+            </div> 
+        </div>
+    </div>
+
+
+    <script type="text/javascript">
+        function copy() {
+            let textarea = document.getElementById("urlresult");
+            textarea.select();
+            document.execCommand("copy");
+        }
+       
+    </script>
+{% else %}
+    <div class="col-lg-6">
+        <form hx-post="{% url 'selfurl:makeshort' %}" hx-target="#url_response" hx-swap="innerHTML" hx-indicator="#indicator">
+            {% csrf_token %}
+            <div class="input-group mb-3 mt-3">
+                {{ form.long_url }}
+                <input type="submit" class="btn btn-danger" value="Make Short"/>
+            </div>
+            <span class="text-error invalid-feedback">{{ form.long_url.errors }}</span>
+        </form>
+        
+    </div>
+    {# {% include "layouts/ads_display.html" %} #}
+{% endif %}
+<div class="col-lg-12 text-start align-center">
+    {% if messages %}                                                     
+        {% for message in messages %}
+        <em class="text-danger ">{{ message }}</em> 
+        {% endfor %} 
+    {% else %} 
+    {% endif %} 
+</div> 
