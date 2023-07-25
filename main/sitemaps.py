@@ -86,8 +86,13 @@ class UserBlogSitemap(sitemaps.Sitemap):
     priority = 0.9    
 
     def items(self):
-        users = User.objects.filter(is_active = True).order_by('-date_joined')[:20]
-        return users
+        # Annotate the queryset with the count of blogs created by each user
+        users_with_blog_count = User.objects.filter(is_active=True).annotate(blog_count=Count('cms_blog_creator'))
+
+        # Filter the users to include only those who have created at least one blog
+        users_with_blogs = users_with_blog_count.filter(blog_count__gt=0).order_by('-date_joined')[:20]
+
+        return users_with_blogs
     
     def lastmod(self, obj):
         return obj.date_joined
@@ -122,18 +127,18 @@ class UrlVersionsSitemap(sitemaps.Sitemap):
         
     def location(self, obj):
         return reverse('selfurl:versions', args=[str(obj.short_url)])
-from django.db.models import Q   
+
 class VisiorLogPdfSitemap(sitemaps.Sitemap):
     changefreq = "weekly"
     priority = 0.9    
 
     def items(self):
-        versions = Shortener.objects.filter(active=True, creator=True)[:20]
+        versions = Shortener.objects.filter(active=True, creator_id__isnull=False, clicked__gt=0)[:20]
         return versions
     
     def lastmod(self, obj):
         return obj.created
-        
+            
     def location(self, obj):
         return reverse('selfurl:generate_visitor_log_pdf', args=[str(obj.short_url)])
     
@@ -142,7 +147,7 @@ class ClickedPdfSitemap(sitemaps.Sitemap):
     priority = 0.9    
 
     def items(self):
-        versions = Shortener.objects.filter(active=True, creator=True)[:20]
+        versions = Shortener.objects.filter(active=True, creator_id__isnull=False, clicked__gt=0)[:20]
         return versions
     
     def lastmod(self, obj):

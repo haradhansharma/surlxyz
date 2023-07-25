@@ -600,7 +600,7 @@ def statistics(request):
     
     seo_info['og_image'] = request.user.get_profile.avatar.url
     
-    items = Shortener.objects.filter(creator = request.user).order_by('created')   
+    items = Shortener.objects.filter(creator = request.user).order_by('-created')   
     created_since = arrow.get((items.first()).created).humanize()     
     
     #Paginated response

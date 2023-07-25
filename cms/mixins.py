@@ -109,7 +109,6 @@ class CreatorModelMixin(models.Model):
         editable=False,
         db_index=True,
         related_name='%(app_label)s_%(class)s_creator',
-        # default=get_user_model().objects.get_or_create(username='haradhansharma', email='haradhan.sharma@gmail.com')[0].pk
     )
     def get_creator_field_name(self):
         return 'creator'
