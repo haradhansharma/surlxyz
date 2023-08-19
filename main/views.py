@@ -47,43 +47,7 @@ def index(request):
     response['X-Robots-Tag'] = 'index, follow'
     return response
 
-def webmanifest(request):
-    site = site_info()      
-    icons = [
-        {
-      "src": site['og_image'],
-      "sizes": "72x72",
-      "type": "image/png"
-    },
-    {
-      "src": site['og_image'],
-      "sizes": "144x144",
-      "type": "image/png"
-    },
-    ]    
-    ic192 = {
-        "src": site['og_image'],
-        "sizes": "192x192",
-        "type": "image/png"        
-    }
-    
-    icons.append(ic192)   
-    ic512 = {
-        "src": site['og_image'],
-        "sizes": "512x512",
-        "type": "image/png"        
-    }
-    icons.append(ic512)    
-    data = {
-        'name' : site['name'],
-        'short_name' : site['name'],
-        'icons' : icons,
-        "theme_color": "#ffffff",
-        "background_color": "#ffffff",
-        "display": "standalone"        
-    }
-    
-    return JsonResponse(data, safe=False)
+
 
 def webmanifest(request):
     site = site_info()  # Make sure this function provides the required site information safely

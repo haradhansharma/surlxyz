@@ -8,7 +8,7 @@ def lc(request):
     license = Licences.objects.all()    
     context = dict()    
     for l in license:
-        if l.validaty < timezone.now():
+        if l.validaty > timezone.now():
             context.update({
                 l.party_domain : False
             })

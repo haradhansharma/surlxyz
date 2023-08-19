@@ -58,7 +58,7 @@ def get_reply_form(request, id):
     return render(request, template_name, context=context)
 
 
-
+ 
 @login_required
 def threads(request, email): 
     if email != base64_encode(request.user.email) or not request.user.is_staff or not request.user.is_superuser:
