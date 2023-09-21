@@ -34,6 +34,8 @@ def delete_avatar(request):
 
 @login_required
 def profile_setting(request, id):  
+    print(id)
+    print(request.user.id)
     if id == str(request.user.id):   
         pass
     else:
@@ -227,7 +229,7 @@ class CustomLoginView(LoginView):
     def form_valid(self, form): 
         
         #set after login url 
-        self.next_page = reverse_lazy('accounts:profile_setting', args=[str(form.get_user().username)])           
+        self.next_page = reverse_lazy('accounts:profile_setting', args=[str(form.get_user().id)])           
         
         #rememberme section        
         remember_me = form.cleaned_data.get('remember_me')  
