@@ -33,9 +33,8 @@ def delete_avatar(request):
 
 
 @login_required
-def profile_setting(request, id):  
-    print(id)
-    print(request.user.id)
+def profile_setting(request, id): 
+ 
     if id == str(request.user.id):   
         pass
     else:

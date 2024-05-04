@@ -3,111 +3,128 @@
 {% block robot %}<meta name="robots" content="index">{% endblock %}
 {% block content %}
 
-<div class="px-4 py-5 mb-5 text-center  border-bottom ">
-    <img class="d-block mx-auto mb-4" src="{{ site_data.favicon }}" alt="{{site_data.title}}" width="72" height="72">
-    <h1 class="display-5 fw-bold text-primary">{{site_data.title}}</h1>
-    <div class="mt-2">
-        
-    </div>
-    <div class="col-lg-12 mx-auto">
-        <div class="container bg-image-container d-flex flex-column align-items-start" style="background-image: url('{% static 'doodle/top_to_btm.svg' %}'); background-repeat: no-repeat; background-position: left bottom; min-height: 100px;">
-            <div class="lead mb-4">{{ site_data.description|safe }}</div>
-        </div>      
-    </div>
-    <div class="col-lg-12 mx-auto">
-        <div id="url_response" class="row justify-content-center">
-            {% include 'selfurl/makeshort.html' %}
+<div class="d-flex align-items-center justfy-content-center vh-100 text-center mb-4 border-bottom ">
+    
+    
+    <div class="">
+        <img class="d-block mx-auto mb-4" src="{{ site_data.favicon }}" alt="{{site_data.title}}" width="72" height="72">
+        {% if request.user_agent.is_mobile or request.user_agent.is_tablet  %}
+        <h1 class="display-5 fw-bold text-primary">Shorten, Share, Succeed</h1>
+        {% else %}
+        <h1 class="display-5 fw-bold text-primary">{{site_data.title}}</h1>
+        {% endif %}
+        <div class="mt-2">        
+        </div>
+        <div class="col-lg-12 mx-auto">
+            {% comment %} <div class="container bg-image-container d-flex flex-column align-items-start" style="background-image: url('{% static 'doodle/top_to_btm.svg' %}'); background-repeat: no-repeat; background-position: left bottom; min-height: 100px;"> {% endcomment %}
+            <div class="container d-flex flex-column align-items-start">          
+                {% if request.user_agent.is_mobile or request.user_agent.is_tablet  %}
+                <div class="lead mb-1 text-center">Unlock the power of smart link management with our secure and user-friendly URL shortener. </div>
+                {% else %}
+                <div class="lead mb-4">{{ site_data.description|safe }}</div>
+                {% endif %}
+            </div>      
+        </div>
+        <div class="col-lg-12 mx-auto">
+            <div id="url_response" class="row justify-content-center">
+                {% include 'selfurl/makeshort.html' %}
+            </div>
         </div>
     </div>
 </div>
 
-<div class="border-bottom mb-5">
-    <div class="row justify-content-center">
+<div class="border-bottom mb-2 py-lg-5">
+    <div class="row g-2">
         <h2 class="pb-2 border-bottom border-3 border-primary text-danger">Free Features Overview</h2>
-        <ul class="list-unstyled">
-            <li class="mb-2">
-                <b class="custom-underline">URL Versioning:</b> Take control of your shortened links with URL versioning. Keep the original short URL intact while creating unlimited versions of the same link. 
-                Easily share different versions for specific campaigns, audiences, or marketing channels while tracking all click data under the main short URL.
-            </li>
+        
+        <div class="col-lg-6">
+            <b class="custom-underline">URL Versioning:</b> Take control of your shortened links with URL versioning. Keep the original short URL intact while creating unlimited versions of the same link. 
+            Easily share different versions for specific campaigns, audiences, or marketing channels while tracking all click data under the main short URL.
+        </div>
 
-            <li class="mb-2">
-                <b class="custom-underline">Click Tracking with Comprehensive Statistics: </b> Harness the power of in-depth click tracking analytics with our free service. 
-                Get access to a comprehensive statistics page that provides you with valuable insights into the performance of your shortened links. 
-                Discover the total number of clicks, click distribution across countries with intuitive pie charts, and much more.
-            </li>
+        <div class="col-lg-6">
+            <b class="custom-underline">Click Tracking with Comprehensive Statistics: </b> Harness the power of in-depth click tracking analytics with our free service. 
+            Get access to a comprehensive statistics page that provides you with valuable insights into the performance of your shortened links. 
+            Discover the total number of clicks, click distribution across countries with intuitive pie charts, and much more.
+        </div>
 
-            <li class="mb-2">
-                <b class="custom-underline">Downloadable PDF Reports: </b> Stay informed and share performance metrics easily with our downloadable PDF reports. 
-                The reports include a detailed overview of total clicks, country-wise percentage analytics, and a comprehensive visitor 
-                log that includes information on visitor agents, operating systems, countries, and visiting times.
-            </li>
+        <div class="col-lg-6">
+            <b class="custom-underline">Downloadable PDF Reports: </b> Stay informed and share performance metrics easily with our downloadable PDF reports. 
+            The reports include a detailed overview of total clicks, country-wise percentage analytics, and a comprehensive visitor 
+            log that includes information on visitor agents, operating systems, countries, and visiting times.
+        </div>
 
-            <li class="mb-2">
-                <b class="custom-underline">Visitor Log: </b> Gain a deeper understanding of your audience with our detailed visitor log. Track visitor agent and OS information, 
-                along with their country and visiting time. Use this data to refine your marketing strategies and better cater to your audience's preferences.
-            </li>
+        <div class="col-lg-6">
+            <b class="custom-underline">Visitor Log: </b> Gain a deeper understanding of your audience with our detailed visitor log. Track visitor agent and OS information, 
+            along with their country and visiting time. Use this data to refine your marketing strategies and better cater to your audience's preferences.
+        </div>
 
-            <li class="mb-2">
-                <b class="custom-underline">Malicious URL Reporting and Protection:</b> Join our commitment to maintaining a safer online community. If you come across any suspicious or 
-                potentially harmful URLs, report them through our system. Upon receiving a report, we promptly verify the URL using 
-                the <a rel="nofollow" href="https://www.virustotal.com/" target="_blank">VirusTotal API</a>.  for thorough analysis.
-            </li>
+        <div class="col-lg-6">
+            <b class="custom-underline">Malicious URL Reporting and Protection:</b> Join our commitment to maintaining a safer online community. If you come across any suspicious or 
+            potentially harmful URLs, report them through our system. Upon receiving a report, we promptly verify the URL using 
+            the <a rel="nofollow" href="https://www.virustotal.com/" target="_blank">VirusTotal API</a>.  for thorough analysis.
+        </div>
 
-            <li class="mb-2">
-                <b class="custom-underline">Instant Protection for Users:</b>  If a URL is identified as malicious, we take immediate action to protect our users. 
-                The reported URL is swiftly blocked to prevent any potential harm or risks.
-            </li>
+        <div class="col-lg-6">
+            <b class="custom-underline">Instant Protection for Users:</b>  If a URL is identified as malicious, we take immediate action to protect our users. 
+            The reported URL is swiftly blocked to prevent any potential harm or risks.
+        </div>
 
-            <li class="mb-2">
-                <b class="custom-underline">Safe and Reliable Verification:</b> To ensure the utmost accuracy, we also perform periodic checks on reported URLs as per our schedule. 
-                If a previously blocked URL is found to be safe and free from malicious content, 
-                it is promptly unblocked, ensuring that user links remain accessible to visitors.
-            </li>
+        <div class="col-lg-6">
+            <b class="custom-underline">Safe and Reliable Verification:</b> To ensure the utmost accuracy, we also perform periodic checks on reported URLs as per our schedule. 
+            If a previously blocked URL is found to be safe and free from malicious content, 
+            it is promptly unblocked, ensuring that user links remain accessible to visitors.
+        </div>
 
-            <li class="mb-2">
-                <b class="custom-underline">Link Expiration Control:</b> Stay in command of your shortened URLs with our link expiration control feature. Easily manage the active status of 
-                your links through our intuitive statistics page. Users can view and distinguish between active and inactive URLs, making it simple to track the 
-                accessibility of each link.
-            </li>
-            <li class="mb-2">
-                <b class="custom-underline">Never Expire Option:</b> Leave the link expiration date blank, and your URL will remain active indefinitely. Perfect for permanent sharing and evergreen content.
-            </li>
-            <li class="mb-2">
-                <b class="custom-underline">Custom Expiration Dates:</b> Set a specific expiration date for your shortened URLs. When the date passes, the link will no longer be active, ensuring timely 
-                promotions and limited-time offers.
-            </li>
-            <li class="mb-2">
-                <b class="custom-underline">Instant Activation:</b> Increase or edit the expiration date to a future date, and the link will immediately become active, provided it has not been reported as malicious. 
-                Reactivate your URLs effortlessly for continued use.
-            </li>
-        </ul>
+        <div class="col-lg-6">
+            <b class="custom-underline">Link Expiration Control:</b> Stay in command of your shortened URLs with our link expiration control feature. Easily manage the active status of 
+            your links through our intuitive statistics page. Users can view and distinguish between active and inactive URLs, making it simple to track the 
+            accessibility of each link.
+        </div>
+        <div class="col-lg-6">
+            <b class="custom-underline">Never Expire Option:</b> Leave the link expiration date blank, and your URL will remain active indefinitely. Perfect for permanent sharing and evergreen content.
+        </div>
+        <div class="col-lg-6">
+            <b class="custom-underline">Custom Expiration Dates:</b> Set a specific expiration date for your shortened URLs. When the date passes, the link will no longer be active, ensuring timely 
+            promotions and limited-time offers.
+        </div>
+        <div class="col-lg-6">
+            <b class="custom-underline">Instant Activation:</b> Increase or edit the expiration date to a future date, and the link will immediately become active, provided it has not been reported as malicious. 
+            Reactivate your URLs effortlessly for continued use.
+        </div>
+    </div>
+</div>
+<div class="border-bottom mb-2 py-lg-5">
+    <div class="row g-2">
+       
+            <h3 class="pb-2 border-bottom border-3 border-primary text-danger">Free Features Benefits</h3>
+            <p class="first-letter-wrap col-lg-4">
+                With these free features, our URL shortener empowers you to create and manage shortened URLs efficiently, enhance your online presence, 
+                and keep your links secure. Whether you're a casual user or a small business, these tools will help you make the most of your shortened 
+                links without any cost. Start using our service today and experience the convenience and benefits of shortened URLs!<span class="end-icon"></span>
+            </p>
 
-        <p class="first-letter-wrap">
-            With these free features, our URL shortener empowers you to create and manage shortened URLs efficiently, enhance your online presence, 
-            and keep your links secure. Whether you're a casual user or a small business, these tools will help you make the most of your shortened 
-            links without any cost. Start using our service today and experience the convenience and benefits of shortened URLs!<span class="end-icon"></span>
-        </p>
+            <p class="first-letter-wrap col-lg-4">With our URL versioning feature, you can effortlessly manage multiple versions of your shortened URLs, making it easier to organize, share, and 
+                analyze your campaigns. Enjoy the benefits of click tracking and stay protected with our robust security measures - all at no cost! 
+                Start using our service today and unlock the potential of your shortened links.<span class="end-icon"></span>
+            </p>
+            <p class="first-letter-wrap col-lg-4">
+                With our free click tracking service, you'll have all the tools you need to analyze and optimize the effectiveness of your shortened URLs. 
+                Experience the power of data-driven insights and take your URL management to the next level. Sign up today to unlock the potential of your 
+                shortened links and drive better results for your campaigns.<span class="end-icon"></span>
+            </p>
+            <p class="first-letter-wrap col-lg-4">
+                Rest assured, our robust security measures guarantee that any URL blocked by mistake will be rectified swiftly and efficiently. 
+                Your trust and the safety of our users are of paramount importance to us. Together, we create a secure environment for sharing 
+                shortened URLs and ensure peace of mind for both users and their visitors.<span class="end-icon"></span>
+            </p>
 
-        <p class="first-letter-wrap">With our URL versioning feature, you can effortlessly manage multiple versions of your shortened URLs, making it easier to organize, share, and 
-            analyze your campaigns. Enjoy the benefits of click tracking and stay protected with our robust security measures - all at no cost! 
-            Start using our service today and unlock the potential of your shortened links.<span class="end-icon"></span>
-        </p>
-        <p class="first-letter-wrap">
-            With our free click tracking service, you'll have all the tools you need to analyze and optimize the effectiveness of your shortened URLs. 
-            Experience the power of data-driven insights and take your URL management to the next level. Sign up today to unlock the potential of your 
-            shortened links and drive better results for your campaigns.<span class="end-icon"></span>
-        </p>
-        <p class="first-letter-wrap">
-            Rest assured, our robust security measures guarantee that any URL blocked by mistake will be rectified swiftly and efficiently. 
-            Your trust and the safety of our users are of paramount importance to us. Together, we create a secure environment for sharing 
-            shortened URLs and ensure peace of mind for both users and their visitors.<span class="end-icon"></span>
-        </p>
-
-        <p class="first-letter-wrap">
-            With our link expiration control, you have the flexibility to manage the accessibility of your shortened URLs with ease. 
-            Whether you want links that never expire or temporary campaigns, this feature ensures your URLs are always up-to-date and optimally effective. 
-            Sign up now to take advantage of this powerful tool and make the most out of your shortened links.<span class="end-icon"></span>
-        </p>    
+            <p class="first-letter-wrap col-lg-4">
+                With our link expiration control, you have the flexibility to manage the accessibility of your shortened URLs with ease. 
+                Whether you want links that never expire or temporary campaigns, this feature ensures your URLs are always up-to-date and optimally effective. 
+                Sign up now to take advantage of this powerful tool and make the most out of your shortened links.<span class="end-icon"></span>
+            </p>   
+    
         
     </div>
 </div>
