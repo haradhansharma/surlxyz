@@ -1,6 +1,6 @@
 from django.http import Http404, HttpResponse
-from django.shortcuts import render
-from django.urls import reverse
+from django.shortcuts import redirect, render
+from django.urls import reverse, reverse_lazy
 from .forms import *
 from django.contrib import messages
 from django.conf import settings
@@ -109,35 +109,36 @@ def contact(request):
         form = ContactUsForm(request.POST)
         if form.is_valid():
             form.save()            
-            messages.success(request, 'Your message has been sent. We will get back to you soon.')
+            messages.success(request, 'Currently we are not taking email. Please sent your query to contact@selfurl.xyz')
+            return redirect(reverse_lazy('contact:contact'))
         
-            email_messages = []
+            # email_messages = []
             
-            from_email = settings.DEFAULT_FROM_EMAIL               
+            # from_email = settings.DEFAULT_FROM_EMAIL               
             
-            # Send email to the site admin
-            admin_subject = f'{site_data["name"]} - New contact form submission'
-            admin_message = f"Name: {form.cleaned_data['name']}\nEmail: {form.cleaned_data['email']}\n\nMessage: {form.cleaned_data['message']}"        
-            admin_reply_to = [form.cleaned_data['email']]        
-            admin_mail = [site_data.get('email')]
+            # # Send email to the site admin
+            # admin_subject = f'{site_data["name"]} - New contact form submission'
+            # admin_message = f"Name: {form.cleaned_data['name']}\nEmail: {form.cleaned_data['email']}\n\nMessage: {form.cleaned_data['message']}"        
+            # admin_reply_to = [form.cleaned_data['email']]        
+            # admin_mail = [site_data.get('email')]
             
             
-            email_messages.append((admin_subject, admin_message, from_email, admin_mail , '',  admin_reply_to, ''))
+            # email_messages.append((admin_subject, admin_message, from_email, admin_mail , '',  admin_reply_to, ''))
             
-            visitor_subjct = f'{site_data["name"]} - Greetings from {site_data["name"]}!' 
-            visitor_message = f"Dear {form.cleaned_data['name']},\n\nThank you for reaching out to us through our website." 
-            visitor_message += f"We appreciate your interest in {site_data.get('name')}!\n\n"
-            visitor_message += f"This email is to acknowledge that we have received your contact form submission. Please note that this is a no-reply email, "
-            visitor_message += f"so there's no need to reply to it.\n\nA thread have been created at {request.build_absolute_uri(reverse('contact:threads', args=[base64_encode(request.user.email)]))}"
-            visitor_message += f" . You may follow responses there.\n\nOur team is currently reviewing your message, and we will get back to you soon with a response at the designated thread. "
+            # visitor_subjct = f'{site_data["name"]} - Greetings from {site_data["name"]}!' 
+            # visitor_message = f"Dear {form.cleaned_data['name']},\n\nThank you for reaching out to us through our website." 
+            # visitor_message += f"We appreciate your interest in {site_data.get('name')}!\n\n"
+            # visitor_message += f"This email is to acknowledge that we have received your contact form submission. Please note that this is a no-reply email, "
+            # visitor_message += f"so there's no need to reply to it.\n\nA thread have been created at {request.build_absolute_uri(reverse('contact:threads', args=[base64_encode(request.user.email)]))}"
+            # visitor_message += f" . You may follow responses there.\n\nOur team is currently reviewing your message, and we will get back to you soon with a response at the designated thread. "
             
-            visitor_message += f"We strive to provide excellent service and address your inquiry promptly.\n\nOnce again, we thank you for getting in touch with us. "
-            visitor_message += f"We look forward to connecting with you!\n\nBest regards,\nThe {site_data.get('name')} Team"
-            visitor_mail = [form.cleaned_data['email']]
+            # visitor_message += f"We strive to provide excellent service and address your inquiry promptly.\n\nOnce again, we thank you for getting in touch with us. "
+            # visitor_message += f"We look forward to connecting with you!\n\nBest regards,\nThe {site_data.get('name')} Team"
+            # visitor_mail = [form.cleaned_data['email']]
             
-            email_messages.append((visitor_subjct, visitor_message, from_email, visitor_mail, '', '', ''))        
+            # email_messages.append((visitor_subjct, visitor_message, from_email, visitor_mail, '', '', ''))        
 
-            custom_send_mass_mail(email_messages, fail_silently=False)
+            # custom_send_mass_mail(email_messages, fail_silently=False)
             
             
         else:   
