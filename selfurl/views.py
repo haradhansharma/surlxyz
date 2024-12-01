@@ -10,6 +10,7 @@ from main.context_processor import site_info
 from django.contrib import messages
 from django.views.decorators.cache import cache_control
 from main.helper import check_exists, is_reported
+from main.tasks import send_mass_mail_task
 from .forms import (
     CheckingForm, 
     ShortenerForm, 
@@ -484,11 +485,11 @@ def deactivate_shorten(all_long_url, user, reasons):
     # This updates the active status of all URLs in the all_long_url list to False.
     all_long_url.update(active=False)
     
-    
+     
     if email_data:
         # Send mass mail to all creators
         # This sends a mass mail to all creators of the deactivated URLs.
-        send_mass_mail(email_data, fail_silently=True)
+        send_mass_mail_task.delay(email_data, fail_silently=True)
     
     return 'We have blocked this URL, and it is not available now! Stay Safe!'
 

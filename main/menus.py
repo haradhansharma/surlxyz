@@ -28,7 +28,7 @@ def category_menus(request):
     return menu_items
 
 def page_menus(request):    
-    menu_items = cache.get('sh_page_menu_items')
+    menu_items = cache.get('su_page_menu_items')
     if menu_items is not None:
         return menu_items
     
@@ -59,7 +59,7 @@ def page_menus(request):
     
         
     
-    cache.set('sh_page_menu_items', menu_items, timeout=60 * 60)
+    cache.set('su_page_menu_items', menu_items, timeout=60 * 60)
         
     return menu_items
 
@@ -68,7 +68,7 @@ def page_menus(request):
 
 def footer_menu(request):
     
-    menu_items = cache.get('sh_footer_menu_items')
+    menu_items = cache.get('su_footer_menu_items')
     if menu_items is not None:
         return menu_items   
     
@@ -98,13 +98,13 @@ def footer_menu(request):
         )    
 
     
-    cache.set('sh_footer_menu_items', menu_items, timeout=60 * 60)
+    cache.set('su_footer_menu_items', menu_items, timeout=60 * 60)
     
         
     return menu_items
 
 def header_menu(request):    
-    menu_items = cache.get('sh_header_menu_items')
+    menu_items = cache.get('su_header_menu_items')
     if menu_items is not None:
         return menu_items   
     
@@ -140,7 +140,7 @@ def header_menu(request):
         {'title': 'Contact', 'url': reverse('contact:contact'), 'data_set': False},        
         ) 
     
-    cache.set('sh_header_menu_items', menu_items, timeout=60 * 60)
+    cache.set('su_header_menu_items', menu_items, timeout=60 * 60)
         
     return menu_items
 

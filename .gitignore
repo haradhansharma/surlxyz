@@ -6,11 +6,12 @@ env
 .DS_Store  
 db.sqlite3
 config/settings__bk.py
-config/settings
-config/wsgi.py
+# config/settings
+# config/wsgi.py
 cache/*
 !cache/.gitkeep
 logs/*
 !logs/.gitkeep
+.env
 
 

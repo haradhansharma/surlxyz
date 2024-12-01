@@ -28,7 +28,7 @@ def get_sleep_time_for_vt_check():
     current_time = timezone.now().timestamp()
 
     # Get the last request time from the cache
-    last_request_time = cache.get("last_request_time", 0)
+    last_request_time = cache.get("su_last_request_time", 0)
 
     # Calculate the time elapsed since the last request
     time_elapsed = current_time - last_request_time
@@ -38,7 +38,7 @@ def get_sleep_time_for_vt_check():
 
     if requests_allowed >= 1:
         # Update the last request time to the current time
-        cache.set("last_request_time", current_time, MONTH_IN_SECONDS)
+        cache.set("su_last_request_time", current_time, MONTH_IN_SECONDS)
         return 0  # No need to sleep, request can be made immediately
 
     # Calculate the time to wait before making the next request
@@ -91,7 +91,7 @@ def is_reported(long_url):
 
 def get_blog_archive():
 
-    blog_archives = cache.get('blog_archives')
+    blog_archives = cache.get('su_blog_archives')
     if blog_archives is not None:
         return blog_archives
 
@@ -99,7 +99,7 @@ def get_blog_archive():
             month=TruncMonth('updated_at')                     
         ).values('month').annotate(total_blogs=Count('id')).order_by('-month')    
     
-    cache.set('blog_archives', blog_archives, timeout=60 * 60) 
+    cache.set('su_blog_archives', blog_archives, timeout=60 * 60) 
     return blog_archives
 
 
@@ -107,7 +107,7 @@ def get_blog_archive():
 
 def get_top_views():
 
-    top_views_blog = cache.get('top_views_blog')
+    top_views_blog = cache.get('su_top_views_blog')
     if top_views_blog is not None:
         return top_views_blog
 
@@ -115,72 +115,72 @@ def get_top_views():
         total_view_count=Count('actions', filter=Q(actions__action_type=Action.VIEW))
     ).order_by('-total_view_count')[:6]  
     
-    cache.set('top_views_blog', top_views_blog, timeout=60 * 60) 
+    cache.set('su_top_views_blog', top_views_blog, timeout=60 * 60) 
     return top_views_blog
 
 def get_category_with_count():
 
-    category_count = cache.get('category_count')
+    category_count = cache.get('su_category_count')
     if category_count is not None:
         return category_count
 
     category_count = Category.objects.prefetch_related('blogs_category').annotate(blog_count=Count('blogs_category', filter=Q(blogs_category__status='published')))    
     
-    cache.set('category_count', category_count, timeout=60 * 60) 
+    cache.set('su_category_count', category_count, timeout=60 * 60) 
     return category_count
 
 
 
 def get_blogs():
 
-    blogs = cache.get('blogs')
+    blogs = cache.get('su_blogs')
     if blogs is not None:
         return blogs
 
 
     blogs = Blog.published.all()
-    cache.set('blogs', blogs, timeout=60 * 60) 
+    cache.set('su_blogs', blogs, timeout=60 * 60) 
     return blogs
 
 def categories():
-    categories = cache.get('categories')
+    categories = cache.get('su_categories')
     if categories is not None:
         return categories
     categories = Category.objects.filter(is_active = True)
-    cache.set('categories', categories, timeout=60 * 60)  # Set a timeout of 60 minutes (in seconds)
+    cache.set('su_categories', categories, timeout=60 * 60)  # Set a timeout of 60 minutes (in seconds)
     return categories
 
 
 def pages():
-    pages = cache.get('pages')
+    pages = cache.get('su_pages')
     if pages is not None:
         return pages
     pages = Page.objects.filter(is_active = True, status='published') 
-    cache.set('pages', pages, timeout=60 * 60)  # Set a timeout of 60 minutes (in seconds)
+    cache.set('su_pages', pages, timeout=60 * 60)  # Set a timeout of 60 minutes (in seconds)
     return pages
 
 def get_consent_pages():
-    pages = cache.get('consent_pages')
+    pages = cache.get('su_consent_pages')
     if pages is not None:
         return pages
     pages = Page.objects.filter(is_active = True, consent_required=True) 
-    cache.set('consent_pages', pages, timeout=60 * 60)  # Set a timeout of 60 minutes (in seconds)
+    cache.set('su_consent_pages', pages, timeout=60 * 60)  # Set a timeout of 60 minutes (in seconds)
     return pages
 
 def get_about_us_link():
-    about_us_link = cache.get('about_us_link')
+    about_us_link = cache.get('su_about_us_link')
     if about_us_link is not None:
         return about_us_link
     about_us_link = Page.objects.get(slug = 'about-us').get_absolute_url
-    cache.set('about_us_link', about_us_link, timeout=60 * 60)  # Set a timeout of 60 minutes (in seconds)
+    cache.set('su_about_us_link', about_us_link, timeout=60 * 60)  # Set a timeout of 60 minutes (in seconds)
     return about_us_link
 
 def get_front_text():
-    front_text = cache.get('front_text')
+    front_text = cache.get('su_front_text')
     if front_text is not None:
         return front_text
     front_text = Page.objects.get(slug = 'for-front-page').body
-    cache.set('front_text', front_text, timeout=60 * 60)  # Set a timeout of 60 minutes (in seconds)
+    cache.set('su_front_text', front_text, timeout=60 * 60)  # Set a timeout of 60 minutes (in seconds)
     return front_text  
 
 
@@ -205,7 +205,7 @@ from django.core.mail.message import (
     EmailMultiAlternatives,
     EmailMessage,
 
-)
+) 
 
 def custom_send_mail(
     subject,

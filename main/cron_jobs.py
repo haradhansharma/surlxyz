@@ -8,6 +8,9 @@ from selfurl.models import ReportMalicious, Shortener
 import time
 from django.db.models import Q, F, When, Case
 from django.utils import timezone
+from celery import shared_task
+import logging
+log =  logging.getLogger('log')
 
 def get_checked_result(long_url, vt_client):   
     
@@ -60,7 +63,7 @@ def get_checked_result(long_url, vt_client):
     return checked_time, malicious, suspicious, check_decision
         
 
-
+@shared_task
 def check_reported_url():
     """
     Check reported URLs for malicious activity using VirusTotal API.
@@ -71,39 +74,43 @@ def check_reported_url():
     vt_client = vt.Client(settings.VT_API_KEY)
     
     long_urls = ReportMalicious.objects.filter(checked=False).values('url__long_url').distinct() 
-    
-    if long_urls.exists():
-        for long_url in long_urls:          
-                               
-            checked_time, malicious, suspicious, check_decision = get_checked_result(long_url['url__long_url'], vt_client)
-                        
-            shorteners = Shortener.objects.filter(long_url = long_url['url__long_url'])
-          
-            for shortener in shorteners:
-                if is_reported(shortener.long_url):
-                    if (malicious or suspicious) and (shortener.expires_at == None or shortener.expires_at < timezone.now()):
-                        shortener.active = False
-                    else:
-                        shortener.active = True                
-            Shortener.objects.bulk_update(shorteners, ['active']) 
+    try:
+        if long_urls.exists():
+            for long_url in long_urls:          
+                                
+                checked_time, malicious, suspicious, check_decision = get_checked_result(long_url['url__long_url'], vt_client)
+                            
+                shorteners = Shortener.objects.filter(long_url = long_url['url__long_url'])
             
-            reported_urls = ReportMalicious.objects.filter(url__in = shorteners)  
-            
-            reported_urls.update(checked=True, check_decision=check_decision, checked_at=checked_time)
-             
-            vt_client.close()
-            time.sleep(get_sleep_time_for_vt_check())
+                for shortener in shorteners:
+                    if is_reported(shortener.long_url):
+                        if (malicious or suspicious) and (shortener.expires_at == None or shortener.expires_at < timezone.now()):
+                            shortener.active = False
+                        else:
+                            shortener.active = True                
+                Shortener.objects.bulk_update(shorteners, ['active']) 
+                
+                reported_urls = ReportMalicious.objects.filter(url__in = shorteners)  
+                
+                reported_urls.update(checked=True, check_decision=check_decision, checked_at=checked_time)
+                
+                vt_client.close()
+                time.sleep(get_sleep_time_for_vt_check())
+            log.warning(f'Reported URL check done')
+    except Exception as e:
+        log.warning(f'Reported URL check error: {e}')
+        
 
     return None
 
-class SelfCronJob(CronJobBase):
-    RUN_EVERY_MINS = 120 # every 2 hours
+# class SelfCronJob(CronJobBase):
+#     RUN_EVERY_MINS = 120 # every 2 hours
 
-    schedule = Schedule(run_every_mins=RUN_EVERY_MINS)
-    code = 'main.cron_job'    # a unique code
+#     schedule = Schedule(run_every_mins=RUN_EVERY_MINS)
+#     code = 'main.cron_job'    # a unique code
 
-    def do(self):
-        check_reported_url()
+#     def do(self):
+#         check_reported_url()
 
             
             

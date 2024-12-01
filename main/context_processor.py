@@ -54,12 +54,12 @@ def site_info():
         'description': extend.site_description,
         'author': 'SINCEHENCE LTD',
         'meta_tag': extend.site_meta_tag,
-        'favicon': extend.site_favicon.url,
-        'mask_icon': extend.mask_icon.url,
-        'logo': extend.site_logo.url,
+        'favicon': extend.site_favicon.url if extend.site_favicon else '',
+        'mask_icon': extend.mask_icon.url if extend.mask_icon else '',
+        'logo': extend.site_logo.url if extend.site_logo else '',
         'trademark': extend.trademark,
         'slogan': extend.slogan,
-        'og_image': extend.og_image.url,
+        'og_image': extend.og_image.url if extend.og_image else '',
         'facebook_link': extend.facebook_link,
         'twitter_link': extend.twitter_link,
         'linkedin_link': extend.linkedin_link,
@@ -70,7 +70,7 @@ def site_info():
     }
 
     # Store the site data in the cache with a timeout of 3600 seconds (1 hour)
-    cache.set('site_data', data, timeout=3600)
+    cache.set('su_site_data', data, timeout=3600)
 
     return data
 
