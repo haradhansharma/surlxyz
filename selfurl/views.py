@@ -46,7 +46,7 @@ from django.core.exceptions import PermissionDenied
  
     
     
-def redirect_url(request, short_url): 
+def redirect_url(request, brand=None, short_url = None): 
     if request.user_agent.is_bot:
         return HttpResponse('Request not accepted! Please contact US!')   
     
