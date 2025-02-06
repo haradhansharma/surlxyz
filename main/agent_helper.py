@@ -1,9 +1,11 @@
 import requests
 import json
 
+from config.settings import GEOLOCATIONDBKEY, IP2LOCATIONKEY
+
 #helper functions
 def get_ip(request):
-    
+
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
     if x_forwarded_for:        
         ip = x_forwarded_for.split(',')[-1].strip()    
@@ -59,13 +61,19 @@ def get_agent(request):
 def get_geodata(request): 
     
     ip_address = get_ip(request)
+
     # URL to send the request to
-    request_url = 'https://geolocation-db.com/jsonp/' + ip_address
+    request_url = f'https://geolocation-db.com/jsonp/{GEOLOCATIONDBKEY}/{ip_address}'    
+    # aaa = requests.get(f'https://api.ip2location.io/?key={IP2LOCATIONKEY}&ip={ip_address}&format=json')
+    # print(aaa.content.decode())
     # Send request and decode the result
     response = requests.get(request_url)
+    # print('printing response')
+    # print(response)
     result = response.content.decode()
+    # print(json.loads(result))
     # Clean the returned string so it just contains the dictionary data for the IP address
     result = result.split("(")[1].strip(")")
     # Convert this data into a dictionary
-    result  = json.loads(result)
+    result  = json.loads(result)  
     return result

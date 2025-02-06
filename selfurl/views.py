@@ -95,26 +95,25 @@ def redirect_url(request, brand=None, short_url = None):
         
     # Generate a random secret key for the user
     user_secret_key = Fernet.generate_key()
- 
 
     # Create a Fernet cipher suite using the user secret key
-    cipher_suite = Fernet(user_secret_key)
-    
+    cipher_suite = Fernet(user_secret_key)    
     
     user_agent = get_agent(request)   
     # Convert the user_agent dictionary to a JSON string
     user_agent_json = json.dumps(user_agent)
+    # print(user_agent_json)
     # Encrypt the user_agent dict
     encrypted_user_agent = cipher_suite.encrypt(user_agent_json.encode())    
     
     geodata = get_geodata(request)    
     # Convert the geodata dictionary to a JSON string
     geodata_json = json.dumps(geodata)
+    # print(geodata_json)
     # Encrypt the geodata dict
     encrypted_geodata = cipher_suite.encrypt(geodata_json.encode())  
     
-    encoded_key = base64.b64encode(user_secret_key)    
-  
+    encoded_key = base64.b64encode(user_secret_key)      
         
     visitor_log = VisitorLog.objects.create(
         shortener=shortener,           
@@ -122,8 +121,7 @@ def redirect_url(request, brand=None, short_url = None):
         geo_data = encrypted_geodata,        
     )  
     # Create a VisiLogSecretKey object and associate it with the VisitorLog instance
-    VisiLogSecretKey.objects.create(v_log=visitor_log, key=encoded_key)
-         
+    VisiLogSecretKey.objects.create(v_log=visitor_log, key=encoded_key)         
     
     redirect_to = shortener.long_url   
     
