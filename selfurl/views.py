@@ -597,7 +597,7 @@ def statistics(request):
     seo_info['title'] = 'Unlock Insights, Empower Decisions'
     seo_info['description'] = 'Gain valuable insights into your shortened URL performance. Our click tracking analytics provide comprehensive data to empower your decisions. Track clicks, locations, and more with ease. Discover the power of data-driven marketing.'
     
-    seo_info['og_image'] = request.user.get_profile.avatar.url
+    seo_info['og_image'] = request.user.get_profile.avatar.url if request.user.get_profile.avatar else ''
     
     items = Shortener.objects.filter(creator = request.user).order_by('-created')   
     created_since = arrow.get((items.first()).created).humanize()     
